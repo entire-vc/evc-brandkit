@@ -1,0 +1,33 @@
+{
+  "name": "@evc/tokens",
+  "version": "0.1.0",
+  "description": "Entire VC Design Tokens - Colors, Typography, Spacing",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./css": "./dist/tokens.css",
+    "./css/*": "./dist/themes/*.css",
+    "./tailwind": "./dist/tailwind-preset.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts && pnpm build:css",
+    "build:css": "node scripts/build-css.js",
+    "dev": "tsup src/index.ts --format cjs,esm --dts --watch"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0",
+    "typescript": "^5.3.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

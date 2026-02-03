@@ -1,0 +1,120 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Foundation/Typography" />
+
+# Typography
+
+The EVC design system uses **Inter** as the primary font family for its clean, modern appearance and excellent readability.
+
+## Font Family
+
+```css
+--font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+```
+
+## Font Sizes
+
+<div className="space-y-4 my-8">
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">xs (0.75rem / 12px)</p>
+    <p className="text-xs">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">sm (0.875rem / 14px)</p>
+    <p className="text-sm">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">base (1rem / 16px)</p>
+    <p className="text-base">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">lg (1.125rem / 18px)</p>
+    <p className="text-lg">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">xl (1.25rem / 20px)</p>
+    <p className="text-xl">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">2xl (1.5rem / 24px)</p>
+    <p className="text-2xl">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">3xl (1.875rem / 30px)</p>
+    <p className="text-3xl">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">4xl (2.25rem / 36px)</p>
+    <p className="text-4xl">The quick brown fox jumps over the lazy dog</p>
+  </div>
+</div>
+
+## Font Weights
+
+<div className="space-y-4 my-8">
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">normal (400)</p>
+    <p className="text-lg font-normal">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">medium (500)</p>
+    <p className="text-lg font-medium">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">semibold (600)</p>
+    <p className="text-lg font-semibold">The quick brown fox jumps over the lazy dog</p>
+  </div>
+  <div className="border-b pb-4">
+    <p className="text-xs text-muted-foreground mb-1">bold (700)</p>
+    <p className="text-lg font-bold">The quick brown fox jumps over the lazy dog</p>
+  </div>
+</div>
+
+## Headings
+
+<div className="space-y-4 my-8">
+  <h1 className="scroll-m-20 text-4xl font-bold tracking-tight">Heading 1</h1>
+  <h2 className="scroll-m-20 text-3xl font-semibold tracking-tight">Heading 2</h2>
+  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">Heading 3</h3>
+  <h4 className="scroll-m-20 text-xl font-semibold tracking-tight">Heading 4</h4>
+</div>
+
+## Body Text
+
+<div className="space-y-4 my-8 max-w-prose">
+  <p className="leading-7">
+    This is a paragraph of body text. The EVC design system uses Inter as the primary font for its excellent readability and modern aesthetic. Line height is optimized for comfortable reading.
+  </p>
+  <p className="text-sm text-muted-foreground leading-6">
+    This is secondary/muted text, typically used for descriptions, captions, and helper text. It uses a smaller font size and muted color to create visual hierarchy.
+  </p>
+</div>
+
+## Code
+
+<div className="space-y-4 my-8">
+  <p className="text-sm text-muted-foreground">Inline code:</p>
+  <p>
+    Run <code className="relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm">npm install @evc/ui</code> to install.
+  </p>
+  
+  <p className="text-sm text-muted-foreground mt-4">Code block:</p>
+  <pre className="rounded-lg bg-muted p-4 overflow-x-auto">
+    <code className="font-mono text-sm">{`import { Button } from '@evc/ui';
+
+export function MyComponent() {
+  return <Button>Click me</Button>;
+}`}</code>
+  </pre>
+</div>
+
+## Usage
+
+```tsx
+// Use Tailwind typography classes
+<h1 className="text-4xl font-bold">Large Heading</h1>
+<p className="text-base leading-7">Body text</p>
+<span className="text-sm text-muted-foreground">Muted text</span>
+<code className="font-mono text-sm">Code</code>
+```

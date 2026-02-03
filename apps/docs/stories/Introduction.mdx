@@ -1,0 +1,84 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# EVC Brand Kit
+
+Welcome to the Entire VC Design System documentation.
+
+## Overview
+
+This design system provides a unified look and feel for all Entire VC products:
+
+- **SaaS Applications** (React, Svelte)
+- **Marketing Sites**
+- **Browser Extensions**
+- **Telegram Mini-Apps**
+- **PWAs**
+
+## Packages
+
+| Package | Description |
+|---------|-------------|
+| `@evc/tokens` | Design tokens (colors, typography, spacing) |
+| `@evc/ui` | React UI components |
+
+## Themes
+
+The design system includes four brand themes:
+
+### Entire (Base)
+Neutral, professional look with gray tones. Use for main Entire VC products.
+
+### Spark 🔥
+Creative, energetic theme with orange and yellow accents. Dark-first design.
+
+### Playground 🌊
+Tech-forward, trustworthy theme with blue and cyan tones.
+
+### Team Relay
+Professional, collaborative theme with indigo and purple accents.
+
+## Quick Start
+
+```bash
+# Install packages
+pnpm add @evc/tokens @evc/ui
+
+# Configure Tailwind
+const evcPreset = require('@evc/tokens/tailwind');
+
+module.exports = {
+  presets: [evcPreset],
+  // ...
+};
+
+# Import theme CSS
+@import '@evc/tokens/css/entire.css';
+```
+
+## Usage
+
+```tsx
+import { Button, Card, CardHeader, CardTitle } from '@evc/ui';
+
+function MyComponent() {
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Hello EVC</CardTitle>
+      </CardHeader>
+      <Button>Get Started</Button>
+    </Card>
+  );
+}
+```
+
+## Color Palette
+
+| Theme | Primary | Secondary | Accent |
+|-------|---------|-----------|--------|
+| Entire | `#525769` | `#DDE1E6` | - |
+| Spark | `#FF6A3D` | `#323643` | `#FFC947` |
+| Playground | `#3D8BFF` | `#AEB8C2` | `#33D6C9` |
+| Team Relay | `#6366F1` | `#E0E7FF` | `#8B5CF6` |

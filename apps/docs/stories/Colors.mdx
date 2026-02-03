@@ -1,0 +1,179 @@
+import { Meta, ColorPalette, ColorItem } from '@storybook/blocks';
+
+<Meta title="Foundation/Colors" />
+
+# Color System
+
+The EVC design system uses CSS variables for theming, making it easy to switch between brand themes.
+
+## Base Colors
+
+### Entire (Base Theme)
+
+<ColorPalette>
+  <ColorItem
+    title="Primary"
+    subtitle="#525769"
+    colors={{ Primary: '#525769' }}
+  />
+  <ColorItem
+    title="Secondary"
+    subtitle="#DDE1E6"
+    colors={{ Secondary: '#DDE1E6' }}
+  />
+  <ColorItem
+    title="Background"
+    subtitle="#FFFFFF"
+    colors={{ Background: '#FFFFFF' }}
+  />
+  <ColorItem
+    title="Foreground"
+    subtitle="#1A1A1A"
+    colors={{ Foreground: '#1A1A1A' }}
+  />
+</ColorPalette>
+
+### Spark 🔥
+
+<ColorPalette>
+  <ColorItem
+    title="Primary"
+    subtitle="#FF6A3D"
+    colors={{ Primary: '#FF6A3D' }}
+  />
+  <ColorItem
+    title="Secondary"
+    subtitle="#323643"
+    colors={{ Secondary: '#323643' }}
+  />
+  <ColorItem
+    title="Accent"
+    subtitle="#FFC947"
+    colors={{ Accent: '#FFC947' }}
+  />
+  <ColorItem
+    title="Background"
+    subtitle="#1A1A1A"
+    colors={{ Background: '#1A1A1A' }}
+  />
+</ColorPalette>
+
+### Playground 🌊
+
+<ColorPalette>
+  <ColorItem
+    title="Primary"
+    subtitle="#3D8BFF"
+    colors={{ Primary: '#3D8BFF' }}
+  />
+  <ColorItem
+    title="Secondary"
+    subtitle="#AEB8C2"
+    colors={{ Secondary: '#AEB8C2' }}
+  />
+  <ColorItem
+    title="Accent"
+    subtitle="#33D6C9"
+    colors={{ Accent: '#33D6C9' }}
+  />
+  <ColorItem
+    title="Background"
+    subtitle="#FFFFFF"
+    colors={{ Background: '#FFFFFF' }}
+  />
+</ColorPalette>
+
+### Team Relay
+
+<ColorPalette>
+  <ColorItem
+    title="Primary"
+    subtitle="#6366F1"
+    colors={{ Primary: '#6366F1' }}
+  />
+  <ColorItem
+    title="Secondary"
+    subtitle="#E0E7FF"
+    colors={{ Secondary: '#E0E7FF' }}
+  />
+  <ColorItem
+    title="Accent"
+    subtitle="#8B5CF6"
+    colors={{ Accent: '#8B5CF6' }}
+  />
+  <ColorItem
+    title="Background"
+    subtitle="#FFFFFF"
+    colors={{ Background: '#FFFFFF' }}
+  />
+</ColorPalette>
+
+## Semantic Colors
+
+All themes share consistent semantic colors:
+
+<ColorPalette>
+  <ColorItem
+    title="Destructive"
+    subtitle="Error states"
+    colors={{ Destructive: '#EF4444' }}
+  />
+  <ColorItem
+    title="Success"
+    subtitle="Success states"
+    colors={{ Success: '#22C55E' }}
+  />
+  <ColorItem
+    title="Warning"
+    subtitle="Warning states"
+    colors={{ Warning: '#F59E0B' }}
+  />
+</ColorPalette>
+
+## Usage
+
+### CSS Variables
+
+```css
+/* All colors are available as CSS variables */
+.my-component {
+  background: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+  border: 1px solid hsl(var(--border));
+}
+```
+
+### Tailwind Classes
+
+```html
+<!-- Use semantic color classes -->
+<div class="bg-primary text-primary-foreground">
+  Primary colored box
+</div>
+
+<div class="bg-secondary text-secondary-foreground">
+  Secondary colored box
+</div>
+
+<div class="bg-destructive text-destructive-foreground">
+  Error state
+</div>
+```
+
+## Theme Switching
+
+To switch themes, import the appropriate CSS file:
+
+```css
+/* Base theme */
+@import '@evc/tokens/css/entire.css';
+
+/* Or for Spark */
+@import '@evc/tokens/css/spark.css';
+
+/* Or for Playground */
+@import '@evc/tokens/css/playground.css';
+
+/* Or for Team Relay */
+@import '@evc/tokens/css/team-relay.css';
+```

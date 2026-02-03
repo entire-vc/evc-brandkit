@@ -1,0 +1,84 @@
+@import '@evc/tokens/css/entire.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Theme switching - controlled by data-theme attribute */
+[data-theme='spark'] {
+  --background: 0 0% 10%;
+  --foreground: 0 0% 98%;
+  --card: 240 6% 15%;
+  --card-foreground: 0 0% 98%;
+  --popover: 240 6% 15%;
+  --popover-foreground: 0 0% 98%;
+  --primary: 15 100% 62%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 225 10% 23%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  --accent: 43 100% 64%;
+  --accent-foreground: 0 0% 10%;
+  --destructive: 0 72% 51%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 142 71% 45%;
+  --success-foreground: 0 0% 100%;
+  --warning: 43 100% 64%;
+  --warning-foreground: 0 0% 10%;
+  --border: 240 4% 26%;
+  --input: 240 4% 26%;
+  --ring: 15 100% 62%;
+}
+
+[data-theme='playground'] {
+  --background: 0 0% 100%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 217 100% 62%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 214 14% 72%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 210 40% 96%;
+  --muted-foreground: 215 16% 47%;
+  --accent: 174 72% 52%;
+  --accent-foreground: 222 47% 11%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 142 71% 45%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+  --border: 214 32% 91%;
+  --input: 214 32% 91%;
+  --ring: 217 100% 62%;
+}
+
+[data-theme='team-relay'] {
+  --background: 0 0% 100%;
+  --foreground: 243 75% 20%;
+  --card: 0 0% 100%;
+  --card-foreground: 243 75% 20%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 243 75% 20%;
+  --primary: 239 84% 67%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 226 100% 94%;
+  --secondary-foreground: 243 75% 27%;
+  --muted: 250 100% 98%;
+  --muted-foreground: 220 9% 46%;
+  --accent: 258 90% 66%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --success: 160 84% 39%;
+  --success-foreground: 0 0% 100%;
+  --warning: 38 92% 50%;
+  --warning-foreground: 0 0% 100%;
+  --border: 220 13% 91%;
+  --input: 220 13% 91%;
+  --ring: 239 84% 67%;
+}
