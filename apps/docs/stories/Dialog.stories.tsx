@@ -10,7 +10,9 @@ import {
   Button,
   Input,
   Label,
+  buttonVariants,
 } from '@evc/ui';
+import { cn } from '@evc/ui';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Components/Dialog',
@@ -27,8 +29,8 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   render: () => (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="outline">Open Dialog</Button>
+      <DialogTrigger className={cn(buttonVariants({ variant: 'outline' }))}>
+        Open Dialog
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -50,8 +52,8 @@ export const Default: Story = {
 export const WithForm: Story = {
   render: () => (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button>Edit Profile</Button>
+      <DialogTrigger className={cn(buttonVariants())}>
+        Edit Profile
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -85,8 +87,8 @@ export const WithForm: Story = {
 export const Confirmation: Story = {
   render: () => (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="destructive">Delete Account</Button>
+      <DialogTrigger className={cn(buttonVariants({ variant: 'destructive' }))}>
+        Delete Account
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -114,8 +116,8 @@ export const Confirmation: Story = {
 export const Simple: Story = {
   render: () => (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="secondary">Show Info</Button>
+      <DialogTrigger className={cn(buttonVariants({ variant: 'secondary' }))}>
+        Show Info
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
