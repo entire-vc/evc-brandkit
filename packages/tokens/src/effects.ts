@@ -28,6 +28,7 @@ export const animation = {
   'slide-in-from-bottom': 'slide-in-from-bottom 0.2s ease-out',
   'slide-in-from-left': 'slide-in-from-left 0.2s ease-out',
   'slide-in-from-right': 'slide-in-from-right 0.2s ease-out',
+  'caret-blink': 'caret-blink 1.25s ease-out infinite',
 } as const;
 
 export const keyframes = {
@@ -62,6 +63,10 @@ export const keyframes = {
   'slide-in-from-right': {
     from: { transform: 'translateX(100%)' },
     to: { transform: 'translateX(0)' },
+  },
+  'caret-blink': {
+    '0%,70%,100%': { opacity: '1' },
+    '20%,50%': { opacity: '0' },
   },
 } as const;
 
