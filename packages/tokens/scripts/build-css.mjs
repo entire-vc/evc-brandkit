@@ -1,11 +1,20 @@
 /**
  * Build CSS files from token definitions
  */
-import { themes, hexToRgb } from '../src/colors.js';
 import fs from 'fs';
 import path from 'path';
 
 // Convert hex to HSL for CSS variables
+function hexToRgb(hex) {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) throw new Error(`Invalid hex color: ${hex}`);
+  return {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16),
+  };
+}
+
 function hexToHsl(hex) {
   const { r, g, b } = hexToRgb(hex);
   const rNorm = r / 255;
@@ -38,6 +47,102 @@ function hexToHsl(hex) {
   return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`;
 }
 
+// Theme definitions (inline to avoid TS import issues)
+const themes = {
+  entire: {
+    primary: '#525769',
+    primaryForeground: '#FFFFFF',
+    secondary: '#DDE1E6',
+    secondaryForeground: '#1A1A1A',
+    background: '#FFFFFF',
+    foreground: '#1A1A1A',
+    muted: '#F4F4F5',
+    mutedForeground: '#71717A',
+    card: '#FFFFFF',
+    cardForeground: '#1A1A1A',
+    border: '#E4E4E7',
+    input: '#E4E4E7',
+    ring: '#525769',
+    destructive: '#EF4444',
+    destructiveForeground: '#FFFFFF',
+    success: '#22C55E',
+    successForeground: '#FFFFFF',
+    warning: '#F59E0B',
+    warningForeground: '#FFFFFF',
+    accent: '#525769',
+    accentForeground: '#FFFFFF',
+  },
+  spark: {
+    primary: '#FF6A3D',
+    primaryForeground: '#FFFFFF',
+    secondary: '#323643',
+    secondaryForeground: '#FFFFFF',
+    background: '#1A1A1A',
+    foreground: '#FAFAFA',
+    muted: '#27272A',
+    mutedForeground: '#A1A1AA',
+    card: '#27272A',
+    cardForeground: '#FAFAFA',
+    border: '#3F3F46',
+    input: '#3F3F46',
+    ring: '#FF6A3D',
+    destructive: '#DC2626',
+    destructiveForeground: '#FFFFFF',
+    success: '#22C55E',
+    successForeground: '#FFFFFF',
+    warning: '#FFC947',
+    warningForeground: '#1A1A1A',
+    accent: '#FFC947',
+    accentForeground: '#1A1A1A',
+  },
+  playground: {
+    primary: '#3D8BFF',
+    primaryForeground: '#FFFFFF',
+    secondary: '#AEB8C2',
+    secondaryForeground: '#1A1A1A',
+    background: '#FFFFFF',
+    foreground: '#1A1A1A',
+    muted: '#F1F5F9',
+    mutedForeground: '#64748B',
+    card: '#FFFFFF',
+    cardForeground: '#1A1A1A',
+    border: '#E2E8F0',
+    input: '#E2E8F0',
+    ring: '#3D8BFF',
+    destructive: '#EF4444',
+    destructiveForeground: '#FFFFFF',
+    success: '#22C55E',
+    successForeground: '#FFFFFF',
+    warning: '#F59E0B',
+    warningForeground: '#FFFFFF',
+    accent: '#33D6C9',
+    accentForeground: '#1A1A1A',
+  },
+  'team-relay': {
+    primary: '#6366F1',
+    primaryForeground: '#FFFFFF',
+    secondary: '#E0E7FF',
+    secondaryForeground: '#3730A3',
+    background: '#FFFFFF',
+    foreground: '#1E1B4B',
+    muted: '#F5F3FF',
+    mutedForeground: '#6B7280',
+    card: '#FFFFFF',
+    cardForeground: '#1E1B4B',
+    border: '#E5E7EB',
+    input: '#E5E7EB',
+    ring: '#6366F1',
+    destructive: '#EF4444',
+    destructiveForeground: '#FFFFFF',
+    success: '#10B981',
+    successForeground: '#FFFFFF',
+    warning: '#F59E0B',
+    warningForeground: '#FFFFFF',
+    accent: '#8B5CF6',
+    accentForeground: '#FFFFFF',
+  },
+};
+
 function generateThemeCSS(themeName, colors) {
   const cssVars = Object.entries(colors)
     .map(([key, value]) => {
@@ -56,10 +161,6 @@ function generateThemeCSS(themeName, colors) {
   :root {
 ${cssVars}
     --radius: 0.5rem;
-  }
-
-  .dark {
-    /* Dark mode overrides - customize per theme */
   }
 }
 `;
@@ -90,3 +191,4 @@ ${Object.entries(themes)
 
 fs.writeFileSync(path.join(process.cwd(), 'dist', 'tokens.css'), combinedCSS);
 console.log('✓ Generated tokens.css');
+console.log('✅ CSS build complete!');
