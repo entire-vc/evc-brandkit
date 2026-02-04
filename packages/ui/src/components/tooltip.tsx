@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Slot } from '@radix-ui/react-slot';
 import { cn } from '../lib/utils';
 
 interface TooltipContextValue {
@@ -16,7 +17,12 @@ function useTooltip() {
   return context;
 }
 
-function TooltipProvider({ children }: { children: React.ReactNode }) {
+interface TooltipProviderProps {
+  children: React.ReactNode;
+  delayDuration?: number;
+}
+
+function TooltipProvider({ children, delayDuration: _delayDuration }: TooltipProviderProps) {
   return <>{children}</>;
 }
 
@@ -63,24 +69,67 @@ function Tooltip({ children, delayDuration = 200 }: TooltipProps) {
   );
 }
 
-const TooltipTrigger = React.forwardRef<HTMLButtonElement, React.ButtonHTMLAttributes<HTMLButtonElement>>(
-  ({ ...props }, ref) => {
-    return <button ref={ref} {...props} />;
+interface TooltipTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  asChild?: boolean;
+}
+
+const TooltipTrigger = React.forwardRef<HTMLButtonElement, TooltipTriggerProps>(
+  ({ asChild = false, ...props }, ref) => {
+    const Comp = asChild ? Slot : 'button';
+    return <Comp ref={ref} {...props} />;
   }
 );
 TooltipTrigger.displayName = 'TooltipTrigger';
 
-const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, ...props }, ref) => {
+interface TooltipContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  side?: 'top' | 'right' | 'bottom' | 'left';
+  align?: 'start' | 'center' | 'end';
+  hidden?: boolean;
+}
+
+const TooltipContent = React.forwardRef<HTMLDivElement, TooltipContentProps>(
+  ({ className, side = 'top', align = 'center', hidden = false, ...props }, ref) => {
     const { open } = useTooltip();
 
-    if (!open) return null;
+    if (!open || hidden) return null;
+
+    const positionClasses = {
+      top: 'bottom-full mb-2',
+      bottom: 'top-full mt-2',
+      left: 'right-full mr-2 top-1/2 -translate-y-1/2',
+      right: 'left-full ml-2 top-1/2 -translate-y-1/2',
+    };
+
+    const alignClasses = {
+      top: {
+        start: 'left-0',
+        center: 'left-1/2 -translate-x-1/2',
+        end: 'right-0',
+      },
+      bottom: {
+        start: 'left-0',
+        center: 'left-1/2 -translate-x-1/2',
+        end: 'right-0',
+      },
+      left: {
+        start: '',
+        center: '',
+        end: '',
+      },
+      right: {
+        start: '',
+        center: '',
+        end: '',
+      },
+    };
 
     return (
       <div
         ref={ref}
         className={cn(
-          'absolute bottom-full left-1/2 z-50 mb-2 -translate-x-1/2 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95',
+          'absolute z-50 overflow-hidden rounded-md bg-primary px-3 py-1.5 text-xs text-primary-foreground animate-in fade-in-0 zoom-in-95',
+          positionClasses[side],
+          alignClasses[side][align],
           className
         )}
         {...props}
@@ -91,3 +140,4 @@ const TooltipContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTM
 TooltipContent.displayName = 'TooltipContent';
 
 export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider };
+export type { TooltipProps, TooltipTriggerProps, TooltipContentProps, TooltipProviderProps };

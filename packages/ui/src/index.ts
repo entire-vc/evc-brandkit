@@ -229,5 +229,37 @@ export {
   CarouselNext,
 } from './components/carousel';
 
+// Phase 4: Sidebar
+export {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInput,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuSkeleton,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
+  SidebarProvider,
+  SidebarRail,
+  SidebarSeparator,
+  SidebarTrigger,
+  useSidebar,
+  sidebarMenuButtonVariants,
+} from './components/sidebar';
+
+// Hooks
+export { useIsMobile } from './hooks/use-mobile';
+
 // Icons (re-export from lucide-react)
 export * from 'lucide-react';

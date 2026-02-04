@@ -166,5 +166,38 @@ export {
 // Collapsible
 export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './components/collapsible/index.js';
 
+// Sidebar
+export {
+  SidebarProvider,
+  Sidebar,
+  SidebarTrigger,
+  SidebarRail,
+  SidebarInset,
+  SidebarInput,
+  SidebarHeader,
+  SidebarFooter,
+  SidebarSeparator,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupAction,
+  SidebarGroupContent,
+  SidebarMenu,
+  SidebarMenuItem,
+  SidebarMenuButton,
+  SidebarMenuAction,
+  SidebarMenuBadge,
+  SidebarMenuSkeleton,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
+  useSidebar,
+  sidebarMenuButtonVariants,
+  useIsMobile,
+  type SidebarMenuButtonVariant,
+  type SidebarMenuButtonSize,
+  type SidebarMenuButtonVariants
+} from './components/sidebar/index.js';
+
 // Icons (re-export from lucide-svelte)
 export * from 'lucide-svelte';
