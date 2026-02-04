@@ -113,6 +113,17 @@ body {
 - ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem, ContextMenuLabel, ContextMenuSeparator
 - Collapsible, CollapsibleTrigger, CollapsibleContent
 
+### Sidebar (Navigation with Tree support)
+- SidebarProvider, Sidebar, SidebarTrigger, SidebarRail, SidebarInset
+- SidebarHeader, SidebarFooter, SidebarContent, SidebarSeparator, SidebarInput
+- SidebarGroup, SidebarGroupLabel, SidebarGroupAction, SidebarGroupContent
+- SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuAction
+- SidebarMenuBadge, SidebarMenuSkeleton
+- SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton
+
+### Icons
+All [Lucide icons](https://lucide.dev/icons) are re-exported from `@evc/ui-svelte`
+
 ## Button Variants
 
 ```svelte
@@ -128,6 +139,156 @@ body {
 <Button size="lg">Large</Button>
 <Button size="icon">Icon</Button>
 ```
+
+## Sidebar Example
+
+```svelte
+<script>
+  import {
+    SidebarProvider,
+    Sidebar,
+    SidebarHeader,
+    SidebarContent,
+    SidebarGroup,
+    SidebarGroupLabel,
+    SidebarGroupContent,
+    SidebarMenu,
+    SidebarMenuItem,
+    SidebarMenuButton,
+    SidebarMenuSub,
+    SidebarMenuSubItem,
+    SidebarMenuSubButton,
+    SidebarInset,
+    SidebarTrigger,
+    // Icons
+    Home,
+    Folder,
+    File,
+    Settings,
+    ChevronRight
+  } from '@evc/ui-svelte';
+  import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@evc/ui-svelte';
+
+  const files = [
+    {
+      name: 'src',
+      children: [
+        { name: 'components', children: [{ name: 'Button.svelte' }, { name: 'Card.svelte' }] },
+        { name: 'lib', children: [{ name: 'utils.ts' }] },
+      ],
+    },
+    { name: 'package.json' },
+    { name: 'README.md' },
+  ];
+</script>
+
+<SidebarProvider>
+  <Sidebar>
+    <SidebarHeader>
+      <h2 class="text-lg font-semibold px-4 py-2">My Project</h2>
+    </SidebarHeader>
+    <SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <SidebarMenuButton>
+                <Home class="h-4 w-4" />
+                <span>Home</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+            <SidebarMenuItem>
+              <SidebarMenuButton>
+                <Settings class="h-4 w-4" />
+                <span>Settings</span>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+
+      <SidebarGroup>
+        <SidebarGroupLabel>Files</SidebarGroupLabel>
+        <SidebarGroupContent>
+          <SidebarMenu>
+            {#each files as item}
+              {#if item.children}
+                <Collapsible>
+                  <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                      <SidebarMenuButton>
+                        <Folder class="h-4 w-4" />
+                        <span>{item.name}</span>
+                        <ChevronRight class="ml-auto h-4 w-4 transition-transform group-data-[state=open]:rotate-90" />
+                      </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    <CollapsibleContent>
+                      <SidebarMenuSub>
+                        {#each item.children as child}
+                          <SidebarMenuSubItem>
+                            <SidebarMenuSubButton>
+                              {#if child.children}
+                                <Folder class="h-4 w-4" />
+                              {:else}
+                                <File class="h-4 w-4" />
+                              {/if}
+                              <span>{child.name}</span>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        {/each}
+                      </SidebarMenuSub>
+                    </CollapsibleContent>
+                  </SidebarMenuItem>
+                </Collapsible>
+              {:else}
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <File class="h-4 w-4" />
+                    <span>{item.name}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              {/if}
+            {/each}
+          </SidebarMenu>
+        </SidebarGroupContent>
+      </SidebarGroup>
+    </SidebarContent>
+  </Sidebar>
+
+  <SidebarInset>
+    <header class="flex items-center gap-2 p-4 border-b">
+      <SidebarTrigger />
+      <h1>Content Area</h1>
+    </header>
+    <main class="p-4">
+      <!-- Your content here -->
+    </main>
+  </SidebarInset>
+</SidebarProvider>
+```
+
+## Icons
+
+```svelte
+<script>
+  import { Button, Search, Plus, Loader2, Heart } from '@evc/ui-svelte';
+</script>
+
+<!-- With buttons -->
+<Button>
+  <Search class="mr-2 h-4 w-4" />
+  Search
+</Button>
+
+<!-- Standalone -->
+<Heart class="h-6 w-6 text-destructive" />
+
+<!-- Animated spinner -->
+<Loader2 class="h-6 w-6 animate-spin" />
+```
+
+Browse all icons at [lucide.dev/icons](https://lucide.dev/icons)
 
 ## Dark Mode
 
