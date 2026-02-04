@@ -98,6 +98,6 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
+    // require('tailwindcss-animate'), // TODO: pnpm add -D tailwindcss-animate
   ],
 };
