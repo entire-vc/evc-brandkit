@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '@evc/ui';
+import { Button, ArrowRight, Loader2 } from '@evc/ui';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
@@ -121,21 +121,20 @@ export const WithIcon: Story = {
   args: {
     children: (
       <>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M5 12h14" />
-          <path d="m12 5 7 7-7 7" />
-        </svg>
+        <ArrowRight className="mr-2 h-4 w-4" />
         Continue
+      </>
+    ),
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    disabled: true,
+    children: (
+      <>
+        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+        Loading...
       </>
     ),
   },

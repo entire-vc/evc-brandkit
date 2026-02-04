@@ -228,3 +228,6 @@ export {
   CarouselPrevious,
   CarouselNext,
 } from './components/carousel';
+
+// Icons (re-export from lucide-react)
+export * from 'lucide-react';

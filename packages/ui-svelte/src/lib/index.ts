@@ -165,3 +165,6 @@ export {
 
 // Collapsible
 export { Collapsible, CollapsibleTrigger, CollapsibleContent } from './components/collapsible/index.js';
+
+// Icons (re-export from lucide-svelte)
+export * from 'lucide-svelte';
