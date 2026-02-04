@@ -17,16 +17,14 @@ Unified design system for all Entire VC products:
 
 | Package | Description | Status |
 |---------|-------------|--------|
-| [@evc/tokens](./packages/tokens) | Design tokens (colors, typography, spacing) | ✅ Ready |
-| [@evc/ui](./packages/ui) | React UI components (shadcn-based) | 🚧 WIP |
-| [@evc/themes](./packages/themes) | Pre-configured theme presets | 🚧 WIP |
+| [@evc/tokens](./packages/tokens) | Design tokens, theme CSS, Tailwind preset | ✅ Ready |
+| [@evc/ui](./packages/ui) | React UI components (shadcn-based) | ✅ Ready |
 
 ## Quick Start
 
 ### 1. Install dependencies
 
 ```bash
-# In your project
 pnpm add @evc/tokens @evc/ui
 ```
 
@@ -34,34 +32,55 @@ pnpm add @evc/tokens @evc/ui
 
 ```js
 // tailwind.config.js
-const evcPreset = require('@evc/tokens/tailwind');
+const evcPreset = require('@evc/tokens/tailwind-preset');
 
 module.exports = {
   presets: [evcPreset],
-  content: ['./src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@evc/ui/dist/**/*.{js,mjs}',
+  ],
+  darkMode: 'class',
 };
 ```
 
-### 3. Import theme CSS
+### 3. Import theme CSS and fonts
 
 ```css
 /* globals.css */
-@import '@evc/tokens/css/entire.css'; /* or spark.css, playground.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import '@evc/tokens/css/entire.css'; /* or spark.css, playground.css, team-relay.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+body {
+  font-family: var(--font-sans);
+}
 ```
 
 ### 4. Use components
 
 ```tsx
-import { Button } from '@evc/ui';
+import { Button, Card, CardHeader, CardTitle, CardContent } from '@evc/ui';
 
 export function MyPage() {
   return (
-    <Button variant="default">
-      Get Started
-    </Button>
+    <Card>
+      <CardHeader>
+        <CardTitle>Welcome</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <Button variant="default">Get Started</Button>
+        <Button variant="secondary">Learn More</Button>
+      </CardContent>
+    </Card>
   );
 }
 ```
@@ -71,9 +90,18 @@ export function MyPage() {
 | Theme | Description | Primary Color |
 |-------|-------------|---------------|
 | `entire` | Base brand - neutral, professional | ![#525769](https://via.placeholder.com/15/525769/000000?text=+) `#525769` |
-| `spark` | Creative, energetic | ![#FF6A3D](https://via.placeholder.com/15/FF6A3D/000000?text=+) `#FF6A3D` |
+| `spark` | Creative, energetic (dark theme) | ![#FF6A3D](https://via.placeholder.com/15/FF6A3D/000000?text=+) `#FF6A3D` |
 | `playground` | Tech, trustworthy | ![#3D8BFF](https://via.placeholder.com/15/3D8BFF/000000?text=+) `#3D8BFF` |
 | `team-relay` | Professional, collaborative | ![#6366F1](https://via.placeholder.com/15/6366F1/000000?text=+) `#6366F1` |
+
+### Dark Mode
+
+Add `dark` class to `<html>` element:
+
+```tsx
+// Toggle dark mode
+document.documentElement.classList.toggle('dark');
+```
 
 ## Development
 
@@ -88,7 +116,7 @@ pnpm install
 # Build all packages
 pnpm build
 
-# Run docs/storybook
+# Run Storybook
 pnpm dev
 ```
 
@@ -98,22 +126,14 @@ pnpm dev
 evc-brandkit/
 ├── packages/
 │   ├── tokens/          # Design tokens
-│   │   ├── css/         # Ready-to-use theme CSS
+│   │   ├── css/         # Theme CSS files (entire, spark, playground, team-relay)
 │   │   ├── src/         # Token definitions (TS)
 │   │   └── tailwind-preset.js
-│   ├── ui/              # React components
-│   └── themes/          # Theme presets
+│   └── ui/              # React components (Button, Card, Input, Dialog, etc.)
 ├── apps/
-│   └── docs/            # Documentation site
+│   └── docs/            # Storybook documentation
 └── package.json
 ```
-
-## Contributing
-
-1. Create feature branch from `main`
-2. Make changes
-3. Run `pnpm build && pnpm lint`
-4. Submit PR
 
 ## License
 
