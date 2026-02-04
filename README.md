@@ -19,6 +19,7 @@ Unified design system for all Entire VC products:
 |---------|-------------|--------|
 | [@evc/tokens](./packages/tokens) | Design tokens, theme CSS, Tailwind preset | ✅ Ready |
 | [@evc/ui](./packages/ui) | React UI components (shadcn-based) | ✅ Ready |
+| [@evc/ui-svelte](./packages/ui-svelte) | Svelte 5 UI components (Bits UI-based) | ✅ Ready |
 
 ## Quick Start
 
@@ -67,6 +68,7 @@ body {
 
 ### 4. Use components
 
+**React:**
 ```tsx
 import { Button, Card, CardHeader, CardTitle, CardContent } from '@evc/ui';
 
@@ -83,6 +85,23 @@ export function MyPage() {
     </Card>
   );
 }
+```
+
+**Svelte 5:**
+```svelte
+<script>
+  import { Button, Card, CardHeader, CardTitle, CardContent } from '@evc/ui-svelte';
+</script>
+
+<Card>
+  <CardHeader>
+    <CardTitle>Welcome</CardTitle>
+  </CardHeader>
+  <CardContent>
+    <Button variant="default">Get Started</Button>
+    <Button variant="secondary">Learn More</Button>
+  </CardContent>
+</Card>
 ```
 
 ## Themes
@@ -129,7 +148,8 @@ evc-brandkit/
 │   │   ├── css/         # Theme CSS files (entire, spark, playground, team-relay)
 │   │   ├── src/         # Token definitions (TS)
 │   │   └── tailwind-preset.js
-│   └── ui/              # React components (Button, Card, Input, Dialog, etc.)
+│   ├── ui/              # React components (Button, Card, Input, Dialog, etc.)
+│   └── ui-svelte/       # Svelte 5 components (same API as @evc/ui)
 ├── apps/
 │   └── docs/            # Storybook documentation
 └── package.json

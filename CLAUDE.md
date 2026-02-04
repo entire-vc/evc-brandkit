@@ -20,9 +20,13 @@ pnpm format           # Format with Prettier
 pnpm --filter @evc/tokens build        # Build tokens (tsup + CSS generation)
 pnpm --filter @evc/tokens build:css    # Rebuild theme CSS files only
 
-# UI package
+# UI package (React)
 pnpm --filter @evc/ui build            # Build React components
 pnpm --filter @evc/ui typecheck        # TypeScript check only
+
+# UI Svelte package
+pnpm --filter @evc/ui-svelte build     # Build Svelte components
+pnpm --filter @evc/ui-svelte check     # Svelte + TypeScript check
 
 # Docs/Storybook
 pnpm --filter @evc/docs build          # Build Storybook for production
@@ -43,6 +47,12 @@ This is a **pnpm monorepo** with a design system for multiple Entire VC brands.
   - Uses Radix UI primitives
   - Styled with Tailwind + class-variance-authority (CVA)
   - Utility: `cn()` for className merging (clsx + tailwind-merge)
+
+- **@evc/ui-svelte** (`packages/ui-svelte/`) - Svelte 5 components (same API as @evc/ui)
+  - Uses Bits UI primitives (Svelte equivalent of Radix)
+  - Styled with Tailwind + class-variance-authority (CVA)
+  - Svelte 5 runes API ($props, $state)
+  - Full visual parity with React version
 
 - **@evc/docs** (`apps/docs/`) - Storybook documentation
   - Stories in `stories/*.stories.tsx`
@@ -67,8 +77,14 @@ Themes work via CSS variables. Import one theme CSS file, then Tailwind classes 
 
 ### Consumer Setup
 
-Projects using this design system:
+**React projects:**
 1. `pnpm add @evc/tokens @evc/ui`
 2. Add `presets: [require('@evc/tokens/tailwind-preset')]` to tailwind.config
 3. Import theme CSS: `@import '@evc/tokens/css/entire.css'`
 4. Add `node_modules/@evc/ui/dist/**/*.{js,mjs}` to Tailwind content paths
+
+**Svelte projects:**
+1. `pnpm add @evc/tokens @evc/ui-svelte`
+2. Add `presets: [require('@evc/tokens/tailwind-preset')]` to tailwind.config
+3. Import theme CSS: `@import '@evc/tokens/css/entire.css'`
+4. Add `node_modules/@evc/ui-svelte/dist/**/*.{js,svelte}` to Tailwind content paths
