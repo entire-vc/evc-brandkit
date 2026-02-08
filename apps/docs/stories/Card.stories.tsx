@@ -9,7 +9,7 @@ import {
   Button,
   Input,
   Label,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 
 const meta: Meta<typeof Card> = {
   title: 'Components/Card',

@@ -1,5 +1,5 @@
 {
-  "name": "@evc/docs",
+  "name": "@entire-vc/docs",
   "version": "0.1.0",
   "private": true,
   "description": "EVC Brand Kit Documentation & Storybook",
@@ -10,8 +10,8 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
-    "@evc/tokens": "workspace:*",
-    "@evc/ui": "workspace:*",
+    "@entire-vc/tokens": "workspace:*",
+    "@entire-vc/ui": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

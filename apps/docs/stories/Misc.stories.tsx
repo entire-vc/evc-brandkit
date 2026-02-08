@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Progress, Skeleton, Separator, Avatar, AvatarImage, AvatarFallback } from '@evc/ui';
+import { Progress, Skeleton, Separator, Avatar, AvatarImage, AvatarFallback } from '@entire-vc/ui';
 
 const meta: Meta = {
   title: 'Components/Misc',

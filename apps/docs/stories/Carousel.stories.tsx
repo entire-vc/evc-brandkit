@@ -7,7 +7,7 @@ import {
   CarouselNext,
   Card,
   CardContent,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 
 const meta: Meta<typeof Carousel> = {
   title: 'Components/Carousel',

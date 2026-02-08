@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 
 const meta: Meta<typeof Breadcrumb> = {
   title: 'Components/Breadcrumb',

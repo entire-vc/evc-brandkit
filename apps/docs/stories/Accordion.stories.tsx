@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
   AccordionContent,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 
 const meta: Meta<typeof Accordion> = {
   title: 'Components/Accordion',
@@ -81,7 +81,7 @@ export const FAQ: Story = {
           <AccordionTrigger>How do I install the package?</AccordionTrigger>
           <AccordionContent>
             <code className="bg-muted px-2 py-1 rounded text-sm">
-              pnpm add @evc/ui @evc/tokens
+              pnpm add @entire-vc/ui @entire-vc/tokens
             </code>
           </AccordionContent>
         </AccordionItem>

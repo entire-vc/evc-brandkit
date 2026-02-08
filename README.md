@@ -17,29 +17,29 @@ Unified design system for all Entire VC products:
 
 | Package | Description | Status |
 |---------|-------------|--------|
-| [@evc/tokens](./packages/tokens) | Design tokens, theme CSS, Tailwind preset | ✅ Ready |
-| [@evc/ui](./packages/ui) | React UI components (shadcn-based) | ✅ Ready |
-| [@evc/ui-svelte](./packages/ui-svelte) | Svelte 5 UI components (Bits UI-based) | ✅ Ready |
+| [@entire-vc/tokens](./packages/tokens) | Design tokens, theme CSS, Tailwind preset | ✅ Ready |
+| [@entire-vc/ui](./packages/ui) | React UI components (shadcn-based) | ✅ Ready |
+| [@entire-vc/ui-svelte](./packages/ui-svelte) | Svelte 5 UI components (Bits UI-based) | ✅ Ready |
 
 ## Quick Start
 
 ### 1. Install dependencies
 
 ```bash
-pnpm add @evc/tokens @evc/ui
+pnpm add @entire-vc/tokens @entire-vc/ui
 ```
 
 ### 2. Configure Tailwind
 
 ```js
 // tailwind.config.js
-const evcPreset = require('@evc/tokens/tailwind-preset');
+const evcPreset = require('@entire-vc/tokens/tailwind-preset');
 
 module.exports = {
   presets: [evcPreset],
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@evc/ui/dist/**/*.{js,mjs}',
+    './node_modules/@entire-vc/ui/dist/**/*.{js,mjs}',
   ],
   darkMode: 'class',
 };
@@ -50,7 +50,7 @@ module.exports = {
 ```css
 /* globals.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-@import '@evc/tokens/css/entire.css'; /* or spark.css, playground.css, team-relay.css */
+@import '@entire-vc/tokens/css/entire.css'; /* or spark.css, playground.css, team-relay.css */
 
 @tailwind base;
 @tailwind components;
@@ -70,7 +70,7 @@ body {
 
 **React:**
 ```tsx
-import { Button, Card, CardHeader, CardTitle, CardContent } from '@evc/ui';
+import { Button, Card, CardHeader, CardTitle, CardContent } from '@entire-vc/ui';
 
 export function MyPage() {
   return (
@@ -90,7 +90,7 @@ export function MyPage() {
 **Svelte 5:**
 ```svelte
 <script>
-  import { Button, Card, CardHeader, CardTitle, CardContent } from '@evc/ui-svelte';
+  import { Button, Card, CardHeader, CardTitle, CardContent } from '@entire-vc/ui-svelte';
 </script>
 
 <Card>
@@ -149,7 +149,7 @@ evc-brandkit/
 │   │   ├── src/         # Token definitions (TS)
 │   │   └── tailwind-preset.js
 │   ├── ui/              # React components (Button, Card, Input, Dialog, etc.)
-│   └── ui-svelte/       # Svelte 5 components (same API as @evc/ui)
+│   └── ui-svelte/       # Svelte 5 components (same API as @entire-vc/ui)
 ├── apps/
 │   └── docs/            # Storybook documentation
 └── package.json

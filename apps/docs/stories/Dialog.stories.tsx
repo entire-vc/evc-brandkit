@@ -11,8 +11,8 @@ import {
   Input,
   Label,
   buttonVariants,
-} from '@evc/ui';
-import { cn } from '@evc/ui';
+} from '@entire-vc/ui';
+import { cn } from '@entire-vc/ui';
 
 const meta: Meta<typeof Dialog> = {
   title: 'Components/Dialog',

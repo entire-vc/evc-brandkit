@@ -1,4 +1,4 @@
-const evcPreset = require('@evc/tokens/tailwind-preset');
+const evcPreset = require('@entire-vc/tokens/tailwind-preset');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

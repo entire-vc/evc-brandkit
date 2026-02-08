@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Tabs, TabsList, TabsTrigger, TabsContent, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Button, Input, Label } from '@evc/ui';
+import { Tabs, TabsList, TabsTrigger, TabsContent, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter, Button, Input, Label } from '@entire-vc/ui';
 
 const meta: Meta<typeof Tabs> = {
   title: 'Components/Tabs',

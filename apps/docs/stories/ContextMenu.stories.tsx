@@ -13,7 +13,7 @@ import {
   ContextMenuSubTrigger,
   ContextMenuSubContent,
   ContextMenuShortcut,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 import * as React from 'react';
 
 const meta: Meta<typeof ContextMenu> = {

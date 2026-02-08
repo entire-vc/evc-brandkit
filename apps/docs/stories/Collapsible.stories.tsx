@@ -4,7 +4,7 @@ import {
   CollapsibleTrigger,
   CollapsibleContent,
   Button,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 import * as React from 'react';
 
 const meta: Meta<typeof Collapsible> = {
@@ -96,7 +96,7 @@ export const FAQ: Story = {
         id: 'faq-2',
         question: 'How do I install it?',
         answer:
-          'You can install the design system using pnpm: `pnpm add @evc/ui @evc/tokens`. Make sure to also configure Tailwind CSS with our preset.',
+          'You can install the design system using pnpm: `pnpm add @entire-vc/ui @entire-vc/tokens`. Make sure to also configure Tailwind CSS with our preset.',
       },
       {
         id: 'faq-3',

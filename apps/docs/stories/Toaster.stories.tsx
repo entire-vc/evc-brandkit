@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Toaster, Button } from '@evc/ui';
+import { Toaster, Button } from '@entire-vc/ui';
 import * as React from 'react';
 
 // Note: In a real app, you would import { toast } from 'sonner'
@@ -43,7 +43,7 @@ const ToasterDemo = () => {
       <div className="border rounded-lg p-4 bg-muted/30">
         <p className="text-sm font-medium mb-2">Example code:</p>
         <pre className="text-xs bg-background p-2 rounded border overflow-x-auto">
-{`import { Toaster } from '@evc/ui';
+{`import { Toaster } from '@entire-vc/ui';
 import { toast } from 'sonner';
 
 // In your app root:

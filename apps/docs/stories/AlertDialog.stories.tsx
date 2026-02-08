@@ -10,7 +10,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   Button,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 
 const meta: Meta<typeof AlertDialog> = {
   title: 'Components/AlertDialog',

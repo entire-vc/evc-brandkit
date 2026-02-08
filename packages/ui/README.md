@@ -1,11 +1,11 @@
-# @evc/ui
+# @entire-vc/ui
 
 React UI components for Entire VC, based on shadcn/ui.
 
 ## Installation
 
 ```bash
-pnpm add @evc/ui @evc/tokens
+pnpm add @entire-vc/ui @entire-vc/tokens
 ```
 
 ## Usage
@@ -14,13 +14,13 @@ pnpm add @evc/ui @evc/tokens
 
 ```js
 // tailwind.config.js
-const evcPreset = require('@evc/tokens/tailwind');
+const evcPreset = require('@entire-vc/tokens/tailwind');
 
 module.exports = {
   presets: [evcPreset],
   content: [
     './src/**/*.{js,ts,jsx,tsx}',
-    './node_modules/@evc/ui/dist/**/*.{js,mjs}',
+    './node_modules/@entire-vc/ui/dist/**/*.{js,mjs}',
   ],
 };
 ```
@@ -29,7 +29,7 @@ module.exports = {
 
 ```css
 /* globals.css */
-@import '@evc/tokens/css/entire.css';
+@import '@entire-vc/tokens/css/entire.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -38,7 +38,7 @@ module.exports = {
 ### 3. Use components
 
 ```tsx
-import { Button, Card, CardHeader, CardTitle, CardContent } from '@evc/ui';
+import { Button, Card, CardHeader, CardTitle, CardContent } from '@entire-vc/ui';
 
 export function MyComponent() {
   return (
@@ -106,13 +106,13 @@ This package is designed to grow. To add components from shadcn/ui:
 
 ## Customization
 
-Components use CSS variables from `@evc/tokens`. To customize:
+Components use CSS variables from `@entire-vc/tokens`. To customize:
 
 1. Override CSS variables in your theme
 2. Or extend components with `cn()` utility:
 
 ```tsx
-import { Button, cn } from '@evc/ui';
+import { Button, cn } from '@entire-vc/ui';
 
 function CustomButton({ className, ...props }) {
   return (

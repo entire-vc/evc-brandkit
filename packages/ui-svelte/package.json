@@ -1,5 +1,5 @@
 {
-  "name": "@evc/ui-svelte",
+  "name": "@entire-vc/ui-svelte",
   "version": "0.1.0",
   "description": "Entire VC UI Components - Svelte 5 components",
   "type": "module",
@@ -31,7 +31,7 @@
     "tailwind-merge": "^2.2.0"
   },
   "devDependencies": {
-    "@evc/tokens": "workspace:*",
+    "@entire-vc/tokens": "workspace:*",
     "@sveltejs/package": "^2.3.0",
     "@sveltejs/vite-plugin-svelte": "^4.0.0",
     "svelte": "^5.0.0",

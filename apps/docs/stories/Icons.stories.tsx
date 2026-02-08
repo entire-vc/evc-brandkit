@@ -52,8 +52,8 @@ import {
   Link,
   ExternalLink,
   Loader2,
-} from '@evc/ui';
-import { Button } from '@evc/ui';
+} from '@entire-vc/ui';
+import { Button } from '@entire-vc/ui';
 
 const meta: Meta = {
   title: 'Foundation/Icons',

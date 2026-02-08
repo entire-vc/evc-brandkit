@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button, ArrowRight, Loader2 } from '@evc/ui';
+import { Button, ArrowRight, Loader2 } from '@entire-vc/ui';
 
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',

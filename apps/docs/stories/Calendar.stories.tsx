@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Calendar } from '@evc/ui';
+import { Calendar } from '@entire-vc/ui';
 import * as React from 'react';
 
 const meta: Meta<typeof Calendar> = {

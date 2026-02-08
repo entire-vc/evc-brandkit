@@ -1,5 +1,5 @@
 {
-  "name": "@evc/tokens",
+  "name": "@entire-vc/tokens",
   "version": "0.1.0",
   "description": "Entire VC Design Tokens - Colors, Typography, Spacing",
   "main": "./dist/index.js",

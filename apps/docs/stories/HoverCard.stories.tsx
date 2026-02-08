@@ -7,7 +7,7 @@ import {
   AvatarImage,
   AvatarFallback,
   Button,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 
 const meta: Meta<typeof HoverCard> = {
   title: 'Components/HoverCard',

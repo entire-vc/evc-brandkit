@@ -7,7 +7,7 @@ import {
   PaginationPrevious,
   PaginationNext,
   PaginationEllipsis,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 
 const meta: Meta<typeof Pagination> = {
   title: 'Components/Pagination',

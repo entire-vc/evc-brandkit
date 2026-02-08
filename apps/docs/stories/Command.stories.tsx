@@ -10,7 +10,7 @@ import {
   CommandShortcut,
   CommandSeparator,
   Button,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 import * as React from 'react';
 
 const meta: Meta<typeof Command> = {

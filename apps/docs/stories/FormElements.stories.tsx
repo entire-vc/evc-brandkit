@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Switch, Checkbox, RadioGroup, RadioGroupItem, Label } from '@evc/ui';
+import { Switch, Checkbox, RadioGroup, RadioGroupItem, Label } from '@entire-vc/ui';
 
 const meta: Meta = {
   title: 'Components/Form Elements',

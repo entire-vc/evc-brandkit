@@ -1,11 +1,11 @@
-# @evc/tokens
+# @entire-vc/tokens
 
 Design tokens for Entire VC brand family.
 
 ## Installation
 
 ```bash
-pnpm add @evc/tokens
+pnpm add @entire-vc/tokens
 ```
 
 ## Usage
@@ -16,7 +16,7 @@ Import a theme CSS file in your app:
 
 ```css
 /* In your global CSS or app entry */
-@import '@evc/tokens/css/entire.css';
+@import '@entire-vc/tokens/css/entire.css';
 ```
 
 Available themes:
@@ -30,7 +30,7 @@ Available themes:
 Use the preset in your `tailwind.config.js`:
 
 ```js
-const evcPreset = require('@evc/tokens/tailwind');
+const evcPreset = require('@entire-vc/tokens/tailwind');
 
 module.exports = {
   presets: [evcPreset],
@@ -44,7 +44,7 @@ module.exports = {
 Import tokens directly for programmatic use:
 
 ```ts
-import { themes, fontFamily, spacing } from '@evc/tokens';
+import { themes, fontFamily, spacing } from '@entire-vc/tokens';
 
 // Access specific theme
 const sparkPrimary = themes.spark.primary; // '#FF6A3D'

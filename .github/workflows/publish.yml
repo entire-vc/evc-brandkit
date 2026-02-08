@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com
-          scope: '@evc'
+          scope: '@entire-vc'
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -30,17 +30,17 @@ jobs:
       - name: Build all packages
         run: pnpm build
 
-      - name: Publish @evc/tokens
-        run: pnpm --filter @evc/tokens publish --no-git-checks
+      - name: Publish @entire-vc/tokens
+        run: pnpm --filter @entire-vc/tokens publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish @evc/ui
-        run: pnpm --filter @evc/ui publish --no-git-checks
+      - name: Publish @entire-vc/ui
+        run: pnpm --filter @entire-vc/ui publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Publish @evc/ui-svelte
-        run: pnpm --filter @evc/ui-svelte publish --no-git-checks
+      - name: Publish @entire-vc/ui-svelte
+        run: pnpm --filter @entire-vc/ui-svelte publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

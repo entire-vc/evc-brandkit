@@ -1,10 +1,10 @@
 /**
- * @evc/tokens
+ * @entire-vc/tokens
  * Entire VC Design Tokens
  * 
  * Usage:
  * ```ts
- * import { themes, fontFamily, spacing } from '@evc/tokens';
+ * import { themes, fontFamily, spacing } from '@entire-vc/tokens';
  * ```
  */
 

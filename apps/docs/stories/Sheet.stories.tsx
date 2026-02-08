@@ -10,7 +10,7 @@ import {
   Button,
   Input,
   Label,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 
 const meta: Meta<typeof Sheet> = {
   title: 'Components/Sheet',

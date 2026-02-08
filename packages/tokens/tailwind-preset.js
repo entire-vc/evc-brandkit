@@ -3,7 +3,7 @@
  * 
  * Usage in tailwind.config.js:
  * ```js
- * const evcPreset = require('@evc/tokens/tailwind');
+ * const evcPreset = require('@entire-vc/tokens/tailwind');
  * 
  * module.exports = {
  *   presets: [evcPreset],

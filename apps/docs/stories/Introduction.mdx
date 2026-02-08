@@ -20,8 +20,8 @@ This design system provides a unified look and feel for all Entire VC products:
 
 | Package | Description |
 |---------|-------------|
-| `@evc/tokens` | Design tokens (colors, typography, spacing) |
-| `@evc/ui` | React UI components |
+| `@entire-vc/tokens` | Design tokens (colors, typography, spacing) |
+| `@entire-vc/ui` | React UI components |
 
 ## Themes
 
@@ -43,10 +43,10 @@ Professional, collaborative theme with indigo and purple accents.
 
 ```bash
 # Install packages
-pnpm add @evc/tokens @evc/ui
+pnpm add @entire-vc/tokens @entire-vc/ui
 
 # Configure Tailwind
-const evcPreset = require('@evc/tokens/tailwind');
+const evcPreset = require('@entire-vc/tokens/tailwind');
 
 module.exports = {
   presets: [evcPreset],
@@ -54,13 +54,13 @@ module.exports = {
 };
 
 # Import theme CSS
-@import '@evc/tokens/css/entire.css';
+@import '@entire-vc/tokens/css/entire.css';
 ```
 
 ## Usage
 
 ```tsx
-import { Button, Card, CardHeader, CardTitle } from '@evc/ui';
+import { Button, Card, CardHeader, CardTitle } from '@entire-vc/ui';
 
 function MyComponent() {
   return (

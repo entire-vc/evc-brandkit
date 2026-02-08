@@ -1,19 +1,19 @@
-# @evc/ui-svelte
+# @entire-vc/ui-svelte
 
-> Svelte 5 UI components for EVC Brand Kit - visual parity with @evc/ui
+> Svelte 5 UI components for EVC Brand Kit - visual parity with @entire-vc/ui
 
 ## Features
 
 - **Svelte 5** with runes API ($props, $state, $derived)
 - **Bits UI** primitives (Svelte equivalent of Radix UI)
 - **CVA** for component variants (same API as React version)
-- **Full visual parity** with @evc/ui React components
+- **Full visual parity** with @entire-vc/ui React components
 - **TypeScript** support
 
 ## Installation
 
 ```bash
-pnpm add @evc/ui-svelte @evc/tokens
+pnpm add @entire-vc/ui-svelte @entire-vc/tokens
 ```
 
 ## Setup
@@ -22,13 +22,13 @@ pnpm add @evc/ui-svelte @evc/tokens
 
 ```js
 // tailwind.config.js
-const evcPreset = require('@evc/tokens/tailwind-preset');
+const evcPreset = require('@entire-vc/tokens/tailwind-preset');
 
 export default {
   presets: [evcPreset],
   content: [
     './src/**/*.{html,js,svelte,ts}',
-    './node_modules/@evc/ui-svelte/dist/**/*.{js,svelte}',
+    './node_modules/@entire-vc/ui-svelte/dist/**/*.{js,svelte}',
   ],
   darkMode: 'class',
 };
@@ -39,7 +39,7 @@ export default {
 ```css
 /* app.css */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-@import '@evc/tokens/css/entire.css'; /* or spark.css, playground.css, team-relay.css */
+@import '@entire-vc/tokens/css/entire.css'; /* or spark.css, playground.css, team-relay.css */
 
 @tailwind base;
 @tailwind components;
@@ -59,7 +59,7 @@ body {
 
 ```svelte
 <script>
-  import { Button, Card, CardHeader, CardTitle, CardContent } from '@evc/ui-svelte';
+  import { Button, Card, CardHeader, CardTitle, CardContent } from '@entire-vc/ui-svelte';
 </script>
 
 <Card>
@@ -122,7 +122,7 @@ body {
 - SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton
 
 ### Icons
-All [Lucide icons](https://lucide.dev/icons) are re-exported from `@evc/ui-svelte`
+All [Lucide icons](https://lucide.dev/icons) are re-exported from `@entire-vc/ui-svelte`
 
 ## Button Variants
 
@@ -166,8 +166,8 @@ All [Lucide icons](https://lucide.dev/icons) are re-exported from `@evc/ui-svelt
     File,
     Settings,
     ChevronRight
-  } from '@evc/ui-svelte';
-  import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@evc/ui-svelte';
+  } from '@entire-vc/ui-svelte';
+  import { Collapsible, CollapsibleTrigger, CollapsibleContent } from '@entire-vc/ui-svelte';
 
   const files = [
     {
@@ -272,7 +272,7 @@ All [Lucide icons](https://lucide.dev/icons) are re-exported from `@evc/ui-svelt
 
 ```svelte
 <script>
-  import { Button, Search, Plus, Loader2, Heart } from '@evc/ui-svelte';
+  import { Button, Search, Plus, Loader2, Heart } from '@entire-vc/ui-svelte';
 </script>
 
 <!-- With buttons -->
@@ -311,10 +311,10 @@ Add `dark` class to `<html>` element:
 
 ```bash
 # Build
-pnpm --filter @evc/ui-svelte build
+pnpm --filter @entire-vc/ui-svelte build
 
 # Type check
-pnpm --filter @evc/ui-svelte check
+pnpm --filter @entire-vc/ui-svelte check
 ```
 
 ## License

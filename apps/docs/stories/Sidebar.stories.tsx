@@ -35,7 +35,7 @@ import {
   Calendar,
   HelpCircle,
   LogOut,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 import * as React from 'react';
 
 const meta: Meta<typeof Sidebar> = {

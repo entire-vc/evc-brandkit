@@ -13,7 +13,7 @@ import {
   MenubarSubTrigger,
   MenubarSubContent,
   MenubarShortcut,
-} from '@evc/ui';
+} from '@entire-vc/ui';
 import * as React from 'react';
 
 const meta: Meta<typeof Menubar> = {

@@ -1,5 +1,5 @@
 /**
- * @evc/ui
+ * @entire-vc/ui
  * Entire VC UI Components
  *
  * Based on shadcn/ui with EVC brand customizations

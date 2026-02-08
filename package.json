@@ -11,11 +11,11 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "pnpm --filter @evc/docs dev",
+    "dev": "pnpm --filter @entire-vc/docs dev",
     "build": "pnpm -r build",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
-    "storybook": "pnpm --filter @evc/docs storybook",
+    "storybook": "pnpm --filter @entire-vc/docs storybook",
     "release": "pnpm build && pnpm -r publish --no-git-checks"
   },
   "devDependencies": {
