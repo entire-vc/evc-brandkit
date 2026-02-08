@@ -9,9 +9,11 @@ build/
 .nuxt/
 .svelte-kit/
 
-# IDE
+# IDE & AI tools
 .idea/
 .vscode/
+.claude/
+CLAUDE.md
 *.swp
 *.swo
 .DS_Store
