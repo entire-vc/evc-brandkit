@@ -15,7 +15,8 @@
     "build": "pnpm -r build",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
-    "storybook": "pnpm --filter @evc/docs storybook"
+    "storybook": "pnpm --filter @evc/docs storybook",
+    "release": "pnpm build && pnpm -r publish --no-git-checks"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",

@@ -11,6 +11,7 @@ pnpm dev              # Start Storybook dev server (port 6006)
 pnpm storybook        # Same as dev
 pnpm lint             # Lint all .ts/.tsx files
 pnpm format           # Format with Prettier
+pnpm release          # Build + publish all packages to GitHub Packages
 ```
 
 ### Package-specific commands
@@ -75,7 +76,30 @@ Themes work via CSS variables. Import one theme CSS file, then Tailwind classes 
 4. Add story in `apps/docs/stories/`
 5. Run `pnpm build`
 
+### Publishing
+
+Packages are published to **GitHub Packages** (npm registry at `npm.pkg.github.com`).
+
+```bash
+# Manual publish (all packages)
+pnpm release
+
+# Automated: push a git tag
+git tag v0.1.0 && git push origin v0.1.0
+# GitHub Actions will build and publish automatically
+```
+
 ### Consumer Setup
+
+**Step 0: Configure GitHub Packages registry**
+
+Create `.npmrc` in the consumer project root:
+```
+@evc:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+```
+
+Generate a [Personal Access Token](https://github.com/settings/tokens) with `read:packages` scope.
 
 **React projects:**
 1. `pnpm add @evc/tokens @evc/ui`
