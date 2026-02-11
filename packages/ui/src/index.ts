@@ -261,5 +261,8 @@ export {
 // Hooks
 export { useIsMobile } from './hooks/use-mobile';
 
+// Logo
+export { Logo, type LogoProps } from './components/logo';
+
 // Icons (re-export from lucide-react)
 export * from 'lucide-react';

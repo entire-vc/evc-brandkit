@@ -12,11 +12,13 @@
       "require": "./dist/index.js"
     },
     "./css/*": "./css/*",
-    "./tailwind-preset": "./tailwind-preset.js"
+    "./tailwind-preset": "./tailwind-preset.js",
+    "./logos/*": "./logos/*"
   },
   "files": [
     "dist",
     "css",
+    "logos",
     "src",
     "tailwind-preset.js"
   ],

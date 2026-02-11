@@ -202,5 +202,8 @@ export {
 // Theme
 export { ThemeProvider, createThemeStore } from './components/theme/index.js';
 
+// Logo
+export { Logo } from './components/logo/index.js';
+
 // Icons (re-export from lucide-svelte)
 export * from 'lucide-svelte';
