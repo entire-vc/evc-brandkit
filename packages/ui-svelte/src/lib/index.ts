@@ -199,5 +199,8 @@ export {
   type SidebarMenuButtonVariants
 } from './components/sidebar/index.js';
 
+// Theme
+export { ThemeProvider, createThemeStore } from './components/theme/index.js';
+
 // Icons (re-export from lucide-svelte)
 export * from 'lucide-svelte';

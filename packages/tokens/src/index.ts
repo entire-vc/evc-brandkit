@@ -12,6 +12,7 @@ export * from './colors';
 export * from './typography';
 export * from './spacing';
 export * from './effects';
+export * from './theme';
 
 // Re-export theme utilities
 export { themes, type ThemeName, type ThemeColors } from './colors';
