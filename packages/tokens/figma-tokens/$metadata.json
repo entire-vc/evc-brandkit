@@ -1,0 +1,9 @@
+{
+  "tokenSetOrder": [
+    "core",
+    "entire",
+    "spark",
+    "playground",
+    "team-relay"
+  ]
+}

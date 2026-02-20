@@ -23,8 +23,9 @@
     "tailwind-preset.js"
   ],
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts && pnpm build:css",
+    "build": "tsup src/index.ts --format cjs,esm --dts && pnpm build:css && pnpm build:figma",
     "build:css": "node scripts/build-css.mjs",
+    "build:figma": "node scripts/build-figma-tokens.mjs",
     "dev": "tsup src/index.ts --format cjs,esm --dts --watch"
   },
   "devDependencies": {

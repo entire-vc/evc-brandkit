@@ -1,0 +1,46 @@
+[
+  {
+    "id": "entire",
+    "name": "Entire",
+    "selectedTokenSets": {
+      "core": "enabled",
+      "entire": "enabled",
+      "spark": "disabled",
+      "playground": "disabled",
+      "team-relay": "disabled"
+    }
+  },
+  {
+    "id": "spark",
+    "name": "Spark",
+    "selectedTokenSets": {
+      "core": "enabled",
+      "entire": "disabled",
+      "spark": "enabled",
+      "playground": "disabled",
+      "team-relay": "disabled"
+    }
+  },
+  {
+    "id": "playground",
+    "name": "Playground",
+    "selectedTokenSets": {
+      "core": "enabled",
+      "entire": "disabled",
+      "spark": "disabled",
+      "playground": "enabled",
+      "team-relay": "disabled"
+    }
+  },
+  {
+    "id": "team-relay",
+    "name": "Team Relay",
+    "selectedTokenSets": {
+      "core": "enabled",
+      "entire": "disabled",
+      "spark": "disabled",
+      "playground": "disabled",
+      "team-relay": "enabled"
+    }
+  }
+]
