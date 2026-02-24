@@ -41,6 +41,7 @@ const preview: Preview = {
           { value: 'spark', title: 'Spark 🔥' },
           { value: 'playground', title: 'Playground 🌊' },
           { value: 'team-relay', title: 'Team Relay' },
+          { value: 'mesh', title: 'Mesh 🌐' },
         ],
         showName: true,
         dynamicTitle: true,
