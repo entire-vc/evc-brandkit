@@ -50,6 +50,8 @@
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox={data.viewBox}
+    fill-rule="evenodd"
+    clip-rule="evenodd"
     fill={useCurrentColor ? 'currentColor' : undefined}
     class={cn('h-auto w-full', className)}
     role="img"
