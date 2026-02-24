@@ -11,7 +11,7 @@ const meta: Meta<typeof Logo> = {
   argTypes: {
     brand: {
       control: 'select',
-      options: ['entire', 'spark'],
+      options: ['entire', 'spark', 'mesh'],
     },
     variant: {
       control: 'select',
@@ -116,6 +116,14 @@ export const AllBrands: Story = {
         <h3 className="mb-3 text-sm font-medium">Spark (full)</h3>
         <Logo brand="spark" variant="full" color="color" className="h-8" />
       </div>
+      <div>
+        <h3 className="mb-3 text-sm font-medium">Mesh (full)</h3>
+        <Logo brand="mesh" variant="full" color="color" className="h-8" />
+      </div>
+      <div>
+        <h3 className="mb-3 text-sm font-medium">Mesh (icon)</h3>
+        <Logo brand="mesh" variant="icon" color="color" className="h-12" />
+      </div>
     </div>
   ),
 };
@@ -164,6 +172,52 @@ export const CurrentColor: Story = {
   ),
 };
 
+export const MeshFull: Story = {
+  render: () => (
+    <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <span className="text-sm text-muted-foreground">Color (teal)</span>
+        <Logo brand="mesh" variant="full" color="color" className="h-10" />
+      </div>
+      <div className="flex flex-col gap-2">
+        <span className="text-sm text-muted-foreground">Black</span>
+        <Logo brand="mesh" variant="full" color="black" className="h-10" />
+      </div>
+      <div className="flex flex-col gap-2">
+        <span className="text-sm text-muted-foreground">Grey</span>
+        <Logo brand="mesh" variant="full" color="grey" className="h-10" />
+      </div>
+      <div className="flex flex-col gap-2 rounded-lg bg-zinc-900 p-4">
+        <span className="text-sm text-zinc-400">White (on dark)</span>
+        <Logo brand="mesh" variant="full" color="white" className="h-10" />
+      </div>
+    </div>
+  ),
+};
+
+export const MeshIcon: Story = {
+  render: () => (
+    <div className="flex items-center gap-6">
+      <div className="flex flex-col items-center gap-2">
+        <Logo brand="mesh" variant="icon" color="color" className="h-16" />
+        <span className="text-xs text-muted-foreground">Color</span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <Logo brand="mesh" variant="icon" color="black" className="h-16" />
+        <span className="text-xs text-muted-foreground">Black</span>
+      </div>
+      <div className="flex flex-col items-center gap-2">
+        <Logo brand="mesh" variant="icon" color="grey" className="h-16" />
+        <span className="text-xs text-muted-foreground">Grey</span>
+      </div>
+      <div className="flex flex-col items-center gap-2 rounded-lg bg-zinc-900 p-3">
+        <Logo brand="mesh" variant="icon" color="white" className="h-16" />
+        <span className="text-xs text-zinc-400">White</span>
+      </div>
+    </div>
+  ),
+};
+
 export const OnDarkBackground: Story = {
   render: () => (
     <div className="flex flex-col gap-6 rounded-xl bg-zinc-950 p-8">
@@ -171,6 +225,9 @@ export const OnDarkBackground: Story = {
       <Logo brand="entire" variant="icon" color="white" className="h-14" />
       <Logo brand="spark" variant="full" color="white" className="h-8" />
       <Logo brand="spark" variant="full" color="color" className="h-8" />
+      <Logo brand="mesh" variant="full" color="white" className="h-8" />
+      <Logo brand="mesh" variant="icon" color="white" className="h-14" />
+      <Logo brand="mesh" variant="full" color="color" className="h-8" />
       <Logo brand="entire" variant="icon" color="spark" className="h-14" />
     </div>
   ),

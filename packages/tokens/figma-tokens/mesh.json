@@ -1,0 +1,96 @@
+{
+  "color": {
+    "primary": {
+      "$type": "color",
+      "$value": "#006D6D"
+    },
+    "primary-foreground": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "secondary": {
+      "$type": "color",
+      "$value": "#EEF7F7"
+    },
+    "secondary-foreground": {
+      "$type": "color",
+      "$value": "#0B1B1B"
+    },
+    "background": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "foreground": {
+      "$type": "color",
+      "$value": "#0B1B1B"
+    },
+    "muted": {
+      "$type": "color",
+      "$value": "#F3F8F8"
+    },
+    "muted-foreground": {
+      "$type": "color",
+      "$value": "#4B6B6B"
+    },
+    "card": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "card-foreground": {
+      "$type": "color",
+      "$value": "#0B1B1B"
+    },
+    "popover": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "popover-foreground": {
+      "$type": "color",
+      "$value": "#0B1B1B"
+    },
+    "border": {
+      "$type": "color",
+      "$value": "#DDECEC"
+    },
+    "input": {
+      "$type": "color",
+      "$value": "#DDECEC"
+    },
+    "ring": {
+      "$type": "color",
+      "$value": "#006D6D"
+    },
+    "destructive": {
+      "$type": "color",
+      "$value": "#DC2626"
+    },
+    "destructive-foreground": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "success": {
+      "$type": "color",
+      "$value": "#16A34A"
+    },
+    "success-foreground": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "warning": {
+      "$type": "color",
+      "$value": "#D97706"
+    },
+    "warning-foreground": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    },
+    "accent": {
+      "$type": "color",
+      "$value": "#006D6D"
+    },
+    "accent-foreground": {
+      "$type": "color",
+      "$value": "#FFFFFF"
+    }
+  }
+}

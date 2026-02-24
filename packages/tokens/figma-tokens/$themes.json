@@ -7,7 +7,8 @@
       "entire": "enabled",
       "spark": "disabled",
       "playground": "disabled",
-      "team-relay": "disabled"
+      "team-relay": "disabled",
+      "mesh": "disabled"
     }
   },
   {
@@ -18,7 +19,8 @@
       "entire": "disabled",
       "spark": "enabled",
       "playground": "disabled",
-      "team-relay": "disabled"
+      "team-relay": "disabled",
+      "mesh": "disabled"
     }
   },
   {
@@ -29,7 +31,8 @@
       "entire": "disabled",
       "spark": "disabled",
       "playground": "enabled",
-      "team-relay": "disabled"
+      "team-relay": "disabled",
+      "mesh": "disabled"
     }
   },
   {
@@ -40,7 +43,20 @@
       "entire": "disabled",
       "spark": "disabled",
       "playground": "disabled",
-      "team-relay": "enabled"
+      "team-relay": "enabled",
+      "mesh": "disabled"
+    }
+  },
+  {
+    "id": "mesh",
+    "name": "Mesh",
+    "selectedTokenSets": {
+      "core": "enabled",
+      "entire": "disabled",
+      "spark": "disabled",
+      "playground": "disabled",
+      "team-relay": "disabled",
+      "mesh": "enabled"
     }
   }
 ]

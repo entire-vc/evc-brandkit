@@ -1,0 +1,113 @@
+/**
+ * EVC Theme: Mesh (Entire VC Mesh)
+ * Teal-tinted professional theme with light + dark modes
+ * Primary accent: #006D6D (Deep Teal)
+ *
+ * Usage:
+ * @import '@entire-vc/tokens/css/mesh.css';
+ */
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 180 42% 7%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 42% 7%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 42% 7%;
+
+    --primary: 180 100% 21%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 180 36% 95%;
+    --secondary-foreground: 180 42% 7%;
+
+    --muted: 180 26% 96%;
+    --muted-foreground: 180 18% 36%;
+
+    --accent: 180 100% 21%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 76% 36%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 32 95% 44%;
+    --warning-foreground: 0 0% 100%;
+
+    --border: 180 28% 90%;
+    --input: 180 28% 90%;
+    --ring: 180 100% 21%;
+
+    --radius: 0.5rem;
+
+    /* Sidebar */
+    --sidebar-background: 180 26% 96%;
+    --sidebar-foreground: 180 23% 27%;
+    --sidebar-primary: 180 100% 21%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 180 36% 95%;
+    --sidebar-accent-foreground: 180 100% 21%;
+    --sidebar-border: 180 28% 90%;
+    --sidebar-ring: 180 100% 21%;
+  }
+
+  .dark {
+    --background: 180 29% 6%;
+    --foreground: 180 67% 94%;
+
+    --card: 180 35% 9%;
+    --card-foreground: 180 67% 94%;
+
+    --popover: 180 35% 9%;
+    --popover-foreground: 180 67% 94%;
+
+    --primary: 172 66% 50%;
+    --primary-foreground: 180 45% 4%;
+
+    --secondary: 180 32% 17%;
+    --secondary-foreground: 180 67% 94%;
+
+    --muted: 180 36% 12%;
+    --muted-foreground: 180 15% 65%;
+
+    --accent: 172 66% 50%;
+    --accent-foreground: 180 45% 4%;
+
+    --destructive: 0 91% 71%;
+    --destructive-foreground: 180 29% 6%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 180 29% 6%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 180 29% 6%;
+
+    --border: 180 30% 20%;
+    --input: 180 30% 20%;
+    --ring: 172 66% 50%;
+
+    /* Sidebar dark */
+    --sidebar-background: 180 45% 4%;
+    --sidebar-foreground: 180 15% 65%;
+    --sidebar-primary: 172 66% 50%;
+    --sidebar-primary-foreground: 180 45% 4%;
+    --sidebar-accent: 180 36% 12%;
+    --sidebar-accent-foreground: 172 66% 50%;
+    --sidebar-border: 180 30% 20%;
+    --sidebar-ring: 172 66% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

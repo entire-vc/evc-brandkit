@@ -160,6 +160,41 @@ export const teamRelayColors = {
   accentForeground: '#FFFFFF',
 } as const;
 
+// ============================================
+// MESH 🌐 - Entire VC Mesh (Teal/Professional)
+// ============================================
+export const meshColors = {
+  primary: '#006D6D', // Deep Teal
+  primaryForeground: '#FFFFFF',
+  secondary: '#EEF7F7', // surface.3
+  secondaryForeground: '#0B1B1B',
+
+  // Neutrals (teal-tinted)
+  background: '#FFFFFF',
+  foreground: '#0B1B1B',
+  muted: '#F3F8F8', // bg.subtle
+  mutedForeground: '#4B6B6B', // text.subtle
+
+  // UI Elements
+  card: '#FFFFFF',
+  cardForeground: '#0B1B1B',
+  border: '#DDECEC',
+  input: '#DDECEC',
+  ring: '#006D6D',
+
+  // Semantic
+  destructive: '#DC2626',
+  destructiveForeground: '#FFFFFF',
+  success: '#16A34A',
+  successForeground: '#FFFFFF',
+  warning: '#D97706',
+  warningForeground: '#FFFFFF',
+
+  // Accent (same as primary for mesh)
+  accent: '#006D6D',
+  accentForeground: '#FFFFFF',
+} as const;
+
 // Theme type
 export type ThemeColors = typeof entireColors;
 
@@ -169,6 +204,7 @@ export const themes = {
   spark: sparkColors,
   playground: playgroundColors,
   'team-relay': teamRelayColors,
+  mesh: meshColors,
 } as const;
 
 export type ThemeName = keyof typeof themes;
