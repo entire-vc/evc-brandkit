@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem, Label } from '@entire-vc/ui';
 
 const meta: Meta<typeof Select> = {
