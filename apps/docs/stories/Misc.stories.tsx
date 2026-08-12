@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Progress, Skeleton, Separator, Avatar, AvatarImage, AvatarFallback } from '@entire-vc/ui';
 
 const meta: Meta = {

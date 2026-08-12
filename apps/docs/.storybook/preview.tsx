@@ -1,4 +1,4 @@
-import type { Preview, Decorator } from '@storybook/react';
+import type { Preview, Decorator } from '@storybook/react-vite';
 import React, { useEffect } from 'react';
 import '../src/globals.css';
 
