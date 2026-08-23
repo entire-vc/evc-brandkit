@@ -1,0 +1,28 @@
+# Publishes @entire-vc/* packages to this project's own GitLab npm Package
+# Registry (git.entire.host) instead of npm.pkg.github.com. Registry itself
+# needs no server-level setup — it's part of core GitLab, enabled per-project
+# via `packages_enabled` (verified live, task #8aea5989). Auth: CI_JOB_TOKEN,
+# scoped to this project only — no deploy token, no secret to rotate.
+#
+# Trigger kept identical to the old GHA workflow it replaces
+# (.github/workflows/publish.yml, still present — disabling it is a separate
+# follow-up, see task #c7110523): push of a `v*` tag. A pipeline can also
+# always be re-run manually for any ref from the GitLab UI/API, covering the
+# old workflow_dispatch escape hatch.
+
+stages:
+  - publish
+
+publish:
+  stage: publish
+  image: node:22-slim
+  rules:
+    - if: '$CI_COMMIT_TAG =~ /^v/'
+  before_script:
+    - corepack enable
+    # Registry URL is already in the committed .npmrc (@entire-vc:registry=...);
+    # only the per-job auth token is generated here, never committed.
+    - echo "//git.entire.host/api/v4/projects/${CI_PROJECT_ID}/packages/npm/:_authToken=${CI_JOB_TOKEN}" >> .npmrc
+  script:
+    - pnpm install --frozen-lockfile
+    - pnpm run release
