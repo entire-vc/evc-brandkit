@@ -19,7 +19,7 @@
     "release": "pnpm build && pnpm -r publish --no-git-checks"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
+    "@types/node": "^26.2.0",
     "prettier": "^3.9.6",
     "svgo": "^4.0.2",
     "typescript": "^5.3.0"
