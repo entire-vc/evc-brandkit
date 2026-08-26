@@ -33,7 +33,7 @@ interface TooltipProps {
 
 function Tooltip({ children, delayDuration = 200 }: TooltipProps) {
   const [open, setOpen] = React.useState(false);
-  const timeoutRef = React.useRef<NodeJS.Timeout>();
+  const timeoutRef = React.useRef<NodeJS.Timeout | undefined>(undefined);
 
   const handleOpen = React.useCallback(() => {
     timeoutRef.current = setTimeout(() => setOpen(true), delayDuration);
