@@ -1,0 +1,4 @@
+# Org-wide default. Applies to every entire-vc repository that does not ship
+# its own FUNDING.yml. Product repos are mirrored from GitLab, so keeping the
+# file here is what stops the mirror from overwriting it.
+github: [entire-vc]
