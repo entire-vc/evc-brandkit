@@ -6,6 +6,11 @@ interface SelectContextValue {
   onValueChange: (value: string) => void;
   open: boolean;
   setOpen: (open: boolean) => void;
+  /**
+   * The Select's own wrapper. The outside-click handler needs it to tell an
+   * outside click from a click on its own trigger — see SelectContent.
+   */
+  containerRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const SelectContext = React.createContext<SelectContextValue | null>(null);
@@ -41,9 +46,15 @@ function Select({ value: controlledValue, defaultValue, onValueChange, children 
     [controlledValue, onValueChange]
   );
 
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
   return (
-    <SelectContext.Provider value={{ value, onValueChange: handleValueChange, open, setOpen }}>
-      <div className="relative">{children}</div>
+    <SelectContext.Provider
+      value={{ value, onValueChange: handleValueChange, open, setOpen, containerRef }}
+    >
+      <div className="relative" ref={containerRef}>
+        {children}
+      </div>
     </SelectContext.Provider>
   );
 }
@@ -103,15 +114,35 @@ SelectValue.displayName = 'SelectValue';
 
 const SelectContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, children, ...props }, ref) => {
-    const { open, setOpen } = useSelect();
+    const { open, setOpen, containerRef } = useSelect();
 
+    // ⚠️ This handler MUST decide by target, not by timing.
+    //
+    // It used to be `() => setOpen(false)` — closing on *any* document click.
+    // The click that OPENS the menu is still bubbling toward `document` when
+    // this effect runs and attaches the listener, so that same click reached it
+    // and shut the menu immediately. Net effect: the Select could not be opened
+    // at all — measured with a MutationObserver over a single click as
+    //   aria-expanded=true → content ADDED → aria-expanded=false → REMOVED.
+    //
+    // Checking `event.target` against the Select's own wrapper fixes the
+    // semantics rather than the timing: a click on the trigger is *inside* the
+    // component and must not count as "outside", whenever it arrives. Deferring
+    // the registration by a tick also makes the symptom go away, but it leaves
+    // the handler unable to answer the question it exists to answer, and it
+    // stays sensitive to event ordering.
     React.useEffect(() => {
-      const handleClickOutside = () => setOpen(false);
-      if (open) {
-        document.addEventListener('click', handleClickOutside);
-        return () => document.removeEventListener('click', handleClickOutside);
-      }
-    }, [open, setOpen]);
+      if (!open) return;
+      const handleClickOutside = (event: MouseEvent) => {
+        const container = containerRef.current;
+        if (container && event.target instanceof Node && container.contains(event.target)) {
+          return; // click landed on our trigger or inside our menu
+        }
+        setOpen(false);
+      };
+      document.addEventListener('click', handleClickOutside);
+      return () => document.removeEventListener('click', handleClickOutside);
+    }, [open, setOpen, containerRef]);
 
     if (!open) return null;
 
