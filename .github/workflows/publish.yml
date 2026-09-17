@@ -1,3 +1,16 @@
+# Publishes @entire-vc/* to the PUBLIC npm registry (registry.npmjs.org), org
+# `entire-vc`. This is the single publisher for these packages: a package that
+# exists in two registries as two different builds cannot be pinned by a
+# consumer lockfile, which is what broke evc-team-relay's builds.
+#
+# Auth: repository secret NPM_TOKEN (an npmjs.com automation token with publish
+# rights on the `entire-vc` org). Until that secret exists, this workflow will
+# fail at the publish steps — nothing else here depends on it.
+#
+# Public access for the scoped packages comes from each package's
+# publishConfig.access = "public", so a local `pnpm publish` behaves the same
+# way as CI does.
+
 name: Publish Packages
 
 on:
@@ -8,7 +21,6 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
   publish:
@@ -21,7 +33,7 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 20
-          registry-url: https://npm.pkg.github.com
+          registry-url: https://registry.npmjs.org
           scope: '@entire-vc'
 
       - name: Install dependencies
@@ -33,14 +45,14 @@ jobs:
       - name: Publish @entire-vc/tokens
         run: pnpm --filter @entire-vc/tokens publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @entire-vc/ui
         run: pnpm --filter @entire-vc/ui publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Publish @entire-vc/ui-svelte
         run: pnpm --filter @entire-vc/ui-svelte publish --no-git-checks
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -40,7 +40,8 @@
     "vite": "^6.4.3"
   },
   "publishConfig": {
-    "registry": "https://git.entire.host/api/v4/projects/9/packages/npm/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "repository": {
     "type": "git",
