@@ -21,6 +21,10 @@ Unified design system for all Entire VC products:
 | [@entire-vc/ui](./packages/ui) | React UI components (shadcn-based) | ✅ Ready |
 | [@entire-vc/ui-svelte](./packages/ui-svelte) | Svelte 5 UI components (Bits UI-based) | ✅ Ready |
 
+All three are published to the public npm registry under the
+[`entire-vc`](https://www.npmjs.com/org/entire-vc) org, so they install
+anonymously with no registry configuration and no auth token.
+
 ## Quick Start
 
 ### 1. Install dependencies
