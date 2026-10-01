@@ -1,0 +1,15 @@
+stages: [check]
+
+perf-harness-tests:
+  stage: check
+  image: mcr.microsoft.com/playwright/python:v1.63.0-noble
+  tags: [docker]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  timeout: 10m
+  script:
+    - pip install --quiet playwright==1.63.0
+    - python3 tools/perf/test_measure.py
+    - python3 tools/perf/test_server.py
+    - python3 tools/perf/test_browser.py
