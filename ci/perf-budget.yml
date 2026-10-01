@@ -1,0 +1,33 @@
+# Shared static-site gate. Consumers pin this include and perf/source.json
+# to the same full commit SHA; bootstrap verifies the source manifest.
+.site-perf-budget:
+  stage: check
+  image: mcr.microsoft.com/playwright/python:v1.63.0-noble
+  tags: [docker]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+  needs: ["build"]
+  timeout: 10m
+  script:
+    - pip install --quiet playwright==1.63.0
+    - python3 perf/bootstrap.py test_measure.py
+    - python3 perf/bootstrap.py serve_gzip.py dist 4321 &
+    - |
+      for attempt in $(seq 1 30); do
+        if curl -sf http://localhost:4321/ >/dev/null; then break; fi
+        sleep 1
+      done
+      curl -sf http://localhost:4321/ >/dev/null || { echo "REFUSING: preview server unavailable"; exit 1; }
+    - python3 perf/bootstrap.py measure.py --base-url http://localhost:4321 --runs 10 --out perf/report.json
+  artifacts:
+    when: always
+    paths: [perf/report.json]
+    expire_in: 30 days
+
+# Deployment triggers are deliberately outside the check-stage ordering.
+# Site-specific rules/variables/project remain in each consumer.
+.site-deploy-trigger:
+  stage: deploy
+  needs: []
+  interruptible: false
