@@ -22,5 +22,31 @@ counts and errors even when insufficient runs prevent computing medians.
 image fails, a small 2x image passes, and a missing 2x image fails. The source
 manifest hashes every downloaded Python file; regenerate it after changes.
 
+Optional `mobile.screens` entries add a blocking mobile budget without changing
+the desktop budgets. Each entry needs an origin-relative `path` and `hard`
+ceilings for `lcp_ms`, `cls`, `tbt_ms`, `js_kb`, and `images_kb`. Each page gets
+exactly five cold contexts and must complete all five. Medians gate the job;
+raw runs, LCP element, viewport, and resource weights remain in the report.
+
+The mobile profile is 393x852 CSS pixels, DPR=2, touch/mobile emulation, CPU x4,
+and actual CDP Slow 4G (150ms latency, 1.6Mbps down, 750Kbps up). Load metrics
+are observed through load plus ten seconds, before scrolling. TBT is the
+existing harness proxy: long-task blocking time after FCP in that observation
+window, rather than a Lighthouse score or field INP. Resource bytes include the
+subsequent scroll, so lazy-loaded images are also budgeted.
+
+Use `--mode mobile` for the five-run mobile batch alone, or the default `all`
+to run desktop and configured mobile gates together. Third-party traffic stays
+blocked in CI. `--third-party` includes it for live measurements; report that
+scope separately from the repeatable first-party CI baseline. Browser controls
+also prove a >1MB mobile hero fails and the small replacement passes.
+
 To upgrade, update both the include ref and `perf/source.json` to the reviewed
 commit. To roll back, revert the consumer change to its previous source pin.
+
+Mobile byte totals drain requested static resources after the scroll workload,
+with a 60-second timeout that fails the run rather than omitting in-flight bytes.
+Failed static transfers and HTTP errors invalidate the mobile sample. Browser
+controls include a delayed, oversized lazy image below the fold and an aborted
+script transfer. The report records the actual Chromium version, and the runner
+rejects pages whose layout viewport differs from the requested profile.
