@@ -21,6 +21,7 @@ import argparse
 import json
 import math
 import sys
+from urllib.parse import urlsplit
 import time
 from pathlib import Path
 
@@ -102,7 +103,7 @@ def interact(page, spec: str) -> None:
 
 
 def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
-            mobile: bool = False, third_party: bool = False) -> dict:
+            mobile: bool = False, third_party: bool = False, excluded_resource_paths=()) -> dict:
     options = {"viewport": {"width": 393, "height": 852} if mobile else {"width": 1366, "height": 800},
                "device_scale_factor": 2 if mobile else dpr, "service_workers": "block"}
     if mobile:
@@ -110,6 +111,9 @@ def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
             user_agent="Mozilla/5.0 (Linux; Android 13; Pixel 7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/" + browser.version + " Mobile Safari/537.36")
     ctx = browser.new_context(**options)
     origin = "/".join(url.split("/")[:3])
+    def excluded(request_url):
+        return (mobile and not third_party and request_url.startswith(origin + "/")
+                and urlsplit(request_url).path in excluded_resource_paths)
     # Block every third-party request instead of relying on the runner having
     # no route to the internet: that was the original assumption (a GitLab
     # runner "obviously" has no egress) and it was wrong — measured live,
@@ -119,7 +123,7 @@ def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
     # explicitly makes the gate's scope a property of the code, not of
     # whichever network the job happens to run on this week.
     if not third_party:
-        ctx.route(lambda u: not u.startswith(origin + "/"), lambda route: route.abort())
+        ctx.route(lambda u: not u.startswith(origin + "/") or excluded(u), lambda route: route.abort())
     page = ctx.new_page()
     page.set_default_timeout(30000)
     cdp = ctx.new_cdp_session(page)
@@ -143,7 +147,7 @@ def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
 
     def on_request(p):
         request_url = p.get("request", {}).get("url", "")
-        if mobile and p.get("type") in BUCKET and (third_party or request_url.startswith(origin + "/")):
+        if mobile and p.get("type") in BUCKET and not excluded(request_url) and (third_party or request_url.startswith(origin + "/")):
             pending[p["requestId"]] = request_url
     bytes_by_bucket = {"fonts": 0, "images": 0, "js": 0, "css": 0, "other": 0}
 
@@ -311,7 +315,8 @@ def mobile_measure(browser, base_url, config, third_party=False):
     reports, failures = {}, []
     for sid, screen in config["screens"].items():
         url = base_url.rstrip("/") + screen["path"]
-        runs = [valid_mobile_sample(one_run(browser, url, "scroll", 4, mobile=True, third_party=third_party)) for _ in range(5)]
+        runs = [valid_mobile_sample(one_run(browser, url, "scroll", 4, mobile=True, third_party=third_party,
+                excluded_resource_paths=config.get("excluded_resource_paths", []))) for _ in range(5)]
         ok = [r for r in runs if "error" not in r]
         med = {k: median([r[k] for r in ok]) for k in MOBILE_KEYS} if ok else {}
         reports[sid] = {"url": url, "runs": runs, "median": med, "runs_ok": len(ok)}
@@ -326,6 +331,11 @@ def mobile_measure(browser, base_url, config, third_party=False):
 def validate_mobile(config):
     if not isinstance(config, dict) or not isinstance(config.get("screens"), dict) or not config["screens"]:
         raise ValueError("mobile.screens must contain at least one page")
+    excluded = config.get("excluded_resource_paths", [])
+    if not isinstance(excluded, list) or any(not isinstance(path, str) or not path.startswith("/")
+            or path.startswith("//") or path.endswith("/") or "?" in path or "#" in path
+            or ".." in path.split("/") for path in excluded):
+        raise ValueError("mobile.excluded_resource_paths must contain exact origin-relative resource paths")
     for sid, screen in config["screens"].items():
         if not isinstance(screen, dict) or not isinstance(screen.get("hard"), dict):
             raise ValueError(f"mobile.{sid}: page and hard ceilings must be objects")
@@ -424,6 +434,7 @@ def main() -> int:
             report["mobile_profile"] = {"browser_version": str(browser.version), "width": 393, "height": 852, "dpr": 2, "cpu": 4,
                 "latency_ms": 150, "download_bps": 1600000, "upload_bps": 750000,
                 "third_party": a.third_party, "runs": 5, "aggregation": "median", "load_window_ms": 10000}
+            report["mobile_profile"]["excluded_resource_paths"] = [] if a.third_party else mobile_config.get("excluded_resource_paths", [])
             failures.extend(mobile_failures)
         browser.close()
     report["failures"] = failures
