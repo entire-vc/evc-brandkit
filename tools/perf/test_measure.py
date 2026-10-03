@@ -87,5 +87,46 @@ class SuccessRatioTests(unittest.TestCase):
         self.assertEqual(error.exception.code, 2)
 
 
+class MobileBudgetTests(unittest.TestCase):
+    def test_metrics_and_incomplete_batch_fail_closed(self):
+        config = {"screens": {"heavy": {"path": "/heavy/", "hard": {
+            "lcp_ms": 2500, "cls": .1, "tbt_ms": 200, "js_kb": 20, "images_kb": 100}}}}
+        good = {k: 0 for k in measure.MOBILE_KEYS}
+        good["lcp_ms"] = 2000
+        for key, bad in [("lcp_ms", 2501), ("cls", .101), ("tbt_ms", 201),
+                         ("js_kb", 21), ("images_kb", 101), ("lcp_ms", float('nan'))]:
+            with self.subTest(key=key), patch.object(measure, "one_run", return_value={**good, key: bad}):
+                report, errors = measure.mobile_measure(MagicMock(), "http://localhost", config)
+                self.assertTrue(errors, report)
+                self.assertEqual(len(report["heavy"]["runs"]), 5)
+        with patch.object(measure, "one_run", return_value=good):
+            self.assertEqual(measure.mobile_measure(MagicMock(), "http://localhost", config)[1], [])
+        with patch.object(measure, "one_run", side_effect=[good] * 4 + [{"error": "timeout"}]):
+            self.assertIn("need 5/5", measure.mobile_measure(MagicMock(), "http://localhost", config)[1][0])
+
+    def test_one_invalid_sample_cannot_hide_behind_a_valid_median(self):
+        config = {"screens": {"home": {"path": "/", "hard": {
+            "lcp_ms": 2500, "cls": .1, "tbt_ms": 200, "js_kb": 20, "images_kb": 100}}}}
+        good = {k: 0 for k in measure.MOBILE_KEYS}
+        good["lcp_ms"] = 2000
+        for key in measure.MOBILE_KEYS:
+            for bad in (float("nan"), float("inf"), -1, None, True, "0"):
+                for index in (0, 2, 4):
+                    batch = [good.copy() for _ in range(5)]
+                    batch[index][key] = bad
+                    with self.subTest(key=key, bad=bad, index=index), patch.object(measure, "one_run", side_effect=batch):
+                        report, errors = measure.mobile_measure(MagicMock(), "http://localhost", config)
+                        self.assertEqual(report["home"]["runs_ok"], 4)
+                        self.assertTrue(any("need 5/5" in error for error in errors))
+        for bad in ({}, {**good, "lcp_ms": 0}, None):
+            with patch.object(measure, "one_run", side_effect=[good] * 4 + [bad]):
+                self.assertEqual(measure.mobile_measure(MagicMock(), "http://localhost", config)[0]["home"]["runs_ok"], 4)
+
+    def test_invalid_or_missing_ceilings_are_rejected(self):
+        for hard in [{}, {"lcp_ms": float('nan')}, {"bogus": 100}]:
+            with self.assertRaises(ValueError):
+                measure.validate_mobile({"screens": {"home": {"path": "/", "hard": hard}}})
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
