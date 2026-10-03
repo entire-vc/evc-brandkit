@@ -1,7 +1,7 @@
 {
-  "measure.py": "fdb157c78067810300d64ba1d91078fe7293be4c24850bcbcab6823f23fc4d3a",
+  "measure.py": "0cca61f2492bc2e6aac355df5d25d9eaa3794cc205fed7d8b8275a10cedcf579",
   "serve_gzip.py": "c1cdac3ed30efc185d5025d99110d0cbf66c57a4abc0a6ab79cb78cdf32417a5",
-  "test_browser.py": "7686ef123d9cde41811c278f7dc377b28260fe9d30d3824be3603f0d02f3f670",
-  "test_measure.py": "fd2132eb39b64188698b91dc4ab20cbd9971fc229d035a148e93faef79436573",
+  "test_browser.py": "d65940d406334437860c4111f64cb5d4254590e0e81458e020e90ef3ed6d25ee",
+  "test_measure.py": "9d56f585636af3ab22549550638ebf0ba52e8ee9ceaf273874b931a76f8fe3d2",
   "test_server.py": "a77e58a0e81b27ea5209156796015b3d86a15d7e1b04d2f35896fe68ecc9eb8a"
 }

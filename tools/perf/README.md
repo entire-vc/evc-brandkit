@@ -50,3 +50,9 @@ Failed static transfers and HTTP errors invalidate the mobile sample. Browser
 controls include a delayed, oversized lazy image below the fold and an aborted
 script transfer. The report records the actual Chromium version, and the runner
 rejects pages whose layout viewport differs from the requested profile.
+
+A consumer can document exact `mobile.excluded_resource_paths` for analytics
+SDK proxies absent from its static preview, for example `["/ingest/static/array.js"]`.
+Only mobile first-party CI runs block these resources; `--third-party` includes
+them for live audits. Active exclusions are recorded in `mobile_profile`.
+Directory prefixes and origin-wide exclusions are rejected. Desktop is unchanged.

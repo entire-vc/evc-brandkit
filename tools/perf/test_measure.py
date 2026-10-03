@@ -127,6 +127,14 @@ class MobileBudgetTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 measure.validate_mobile({"screens": {"home": {"path": "/", "hard": hard}}})
 
+    def test_exclusions_require_exact_resource_paths(self):
+        config = {"screens": {"home": {"path": "/", "hard": {
+            "lcp_ms": 2500, "cls": .1, "tbt_ms": 200, "js_kb": 20, "images_kb": 100}}}}
+        for bad in ("/ingest/a.js", ["/"], ["//host/a.js"], ["/ingest/"], [None], ["/a.js?q=x"], ["/../a.js"]):
+            with self.subTest(bad=bad), self.assertRaises(ValueError):
+                measure.validate_mobile({**config, "excluded_resource_paths": bad})
+        measure.validate_mobile({**config, "excluded_resource_paths": ["/ingest/static/array.js"]})
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)

@@ -53,9 +53,16 @@ class BrowserControls(unittest.TestCase):
                 with sync_playwright() as p:
                     browser = p.chromium.launch()
                     result = measure.one_run(browser, f'http://127.0.0.1:{server.server_port}/', 'scroll', 4, mobile=True)
+                    self.assertIn('resource transfers failed', result.get('error', ''), result)
+                    scoped = measure.one_run(browser, f'http://127.0.0.1:{server.server_port}/', 'scroll', 4,
+                        mobile=True, excluded_resource_paths=['/broken.js'])
+                    self.assertNotIn('error', scoped, scoped)
+                    live = measure.one_run(browser, f'http://127.0.0.1:{server.server_port}/', 'scroll', 4,
+                        mobile=True, third_party=True, excluded_resource_paths=['/broken.js'])
+                    self.assertIn('resource transfers failed', live.get('error', ''), live)
                     browser.close()
                 self.assertIn('resource transfers failed', result.get('error', ''), result)
-                print('RED CONTROL: aborted script transfer invalidates mobile sample')
+                print('RED/GREEN/RED: failed transfer rejects default and live; explicit exact-path CI exclusion passes')
             finally:
                 server.shutdown()
                 server.server_close()
