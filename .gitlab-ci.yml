@@ -2,6 +2,7 @@ stages: [check]
 
 perf-harness-tests:
   stage: check
+  interruptible: true
   image: mcr.microsoft.com/playwright/python:v1.63.0-noble
   tags: [docker]
   rules:
@@ -29,6 +30,7 @@ perf-harness-tests:
 # red instead of quietly green.
 topology-gate:
   stage: .pre
+  interruptible: true
   image: python:3.12-alpine
   allow_failure: false
   # Same triggers as the other job here: without rules a job is left out of
