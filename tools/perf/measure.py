@@ -24,8 +24,9 @@ import sys
 from urllib.parse import urlsplit
 import time
 from pathlib import Path
+from itertools import islice
 
-from playwright.sync_api import sync_playwright
+from playwright.sync_api import sync_playwright, TimeoutError as PlaywrightTimeoutError
 
 SCREENS = [
     # (screen_id, path, interaction)
@@ -102,6 +103,25 @@ def interact(page, spec: str) -> None:
         page.wait_for_timeout(500)
 
 
+def request_scope(url, origin):
+    # No URL, path, credentials, query or fragment is retained in diagnostics.
+    try:
+        target, local = urlsplit(url), urlsplit(origin)
+        return "same-origin" if (target.scheme, target.netloc) == (local.scheme, local.netloc) else "external"
+    except (TypeError, ValueError):
+        return "unavailable"
+
+
+def load_diagnostics(page, origin, pending, exception):
+    # Read before context.close; copy only bounded, non-sensitive metadata.
+    resources = list(islice(pending.values(), 10))
+    return {"exception_type": type(exception).__name__[:64],
+            "navigation_scope": request_scope(page.url, origin),
+            "pending_count": len(pending),
+            "pending_resources": [dict(resource) for resource in resources],
+            "pending_omitted": max(0, len(pending) - len(resources))}
+
+
 def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
             mobile: bool = False, third_party: bool = False, excluded_resource_paths=()) -> dict:
     options = {"viewport": {"width": 393, "height": 852} if mobile else {"width": 1366, "height": 800},
@@ -144,9 +164,12 @@ def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
     image_errors: list[str] = []
     resource_errors: list[str] = []
     pending: dict[str, str] = {}
+    load_pending: dict[str, dict] = {}
 
     def on_request(p):
         request_url = p.get("request", {}).get("url", "")
+        if mobile and p.get("type") in (*BUCKET, "Document"):
+            load_pending[p["requestId"]] = {"type": p["type"], "scope": request_scope(request_url, origin)}
         if mobile and p.get("type") in BUCKET and not excluded(request_url) and (third_party or request_url.startswith(origin + "/")):
             pending[p["requestId"]] = request_url
     bytes_by_bucket = {"fonts": 0, "images": 0, "js": 0, "css": 0, "other": 0}
@@ -161,6 +184,7 @@ def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
             image_errors.append(f"HTTP {response['status']}: {response.get('url')}")
 
     def on_fin(p):
+        load_pending.pop(p["requestId"], None)
         pending.pop(p["requestId"], None)
         t = types.get(p["requestId"], "")
         b = p.get("encodedDataLength", 0) or 0
@@ -172,6 +196,7 @@ def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
 
     cdp.on("Network.requestWillBeSent", on_request)
     def on_fail(p):
+        load_pending.pop(p["requestId"], None)
         failed_url = pending.pop(p["requestId"], None)
         if failed_url:
             resource_errors.append(f"{p.get('errorText', 'transfer failed')}: {failed_url}")
@@ -201,9 +226,19 @@ def one_run(browser, url: str, spec: str, cpu: float, dpr: float = 1.0,
     if mobile:
         try:
             page.wait_for_load_state("load", timeout=60000)
-        except Exception:
-            ctx.close()
-            return {"error": "mobile load did not complete within 60s"}
+        except Exception as error:
+            label = ("mobile load did not complete within 60s" if isinstance(error, PlaywrightTimeoutError)
+                     else "mobile load failed")
+            result = {"error": f"{label}: {type(error).__name__[:64]}"}
+            try:
+                result["load_diagnostics"] = load_diagnostics(page, origin, load_pending, error)
+            except Exception:
+                result["load_diagnostics"] = {"unavailable": True}
+            try:
+                ctx.close()
+            except Exception as cleanup_error:
+                result["cleanup_error_type"] = type(cleanup_error).__name__[:64]
+            return result
         # Include delayed analytics and font/image swaps in a repeatable
         # observation window. No scrolling/input before load metrics.
         page.wait_for_timeout(10000)

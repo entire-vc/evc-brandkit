@@ -10,9 +10,17 @@ import types
 import unittest
 from unittest.mock import MagicMock, patch
 
+class TimeoutError(Exception):
+    """Stand-in for Playwright's timeout class; never starts a browser."""
+
+
+class Error(Exception):
+    """Stand-in for a distinct protocol/closed-page Playwright error."""
+
+
 # These checks do not launch a browser or require Playwright to be installed.
 with patch.dict(sys.modules, {"playwright": types.ModuleType("playwright"),
-                              "playwright.sync_api": types.SimpleNamespace(sync_playwright=MagicMock())}):
+                              "playwright.sync_api": types.SimpleNamespace(sync_playwright=MagicMock(), TimeoutError=TimeoutError)}):
     spec = importlib.util.spec_from_file_location("measure", Path(__file__).with_name("measure.py"))
     measure = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(measure)
@@ -85,6 +93,85 @@ class SuccessRatioTests(unittest.TestCase):
         with self.assertRaises(SystemExit) as error, contextlib.redirect_stderr(io.StringIO()):
             self.run_batch(0, 0, runs=0)
         self.assertEqual(error.exception.code, 2)
+
+
+class MobileLoadDiagnosticsTests(unittest.TestCase):
+    def failed_load(self, exception, diagnostics_fail=False, cleanup_fail=False):
+        browser = MagicMock()
+        ctx = browser.new_context.return_value
+        page = ctx.new_page.return_value
+        page.url = "http://localhost:4321/speakers/private-token?credential=test-secret#secret"
+        page.goto.return_value.ok = True
+        page.evaluate.side_effect = [dict(lcp=True, cls=True, longtask=True),
+                                     dict(width=393, height=852, dpr=2)]
+        callbacks = {}
+        ctx.new_cdp_session.return_value.on.side_effect = lambda event, callback: callbacks.update({event: callback})
+
+        def fail_load(state, timeout):
+            self.assertEqual((state, timeout), ("load", 60000))
+            for index in range(12):
+                callbacks["Network.requestWillBeSent"]({"requestId": str(index), "type": "Script",
+                    "request": {"url": "http://localhost:4321/private-token.js?credential=test-secret#secret"}})
+            callbacks["Network.requestWillBeSent"]({"requestId": "navigation", "type": "Document",
+                "request": {"url": page.url}})
+            callbacks["Network.requestWillBeSent"]({"requestId": "finished", "type": "Image",
+                "request": {"url": "http://localhost:4321/done.png"}})
+            callbacks["Network.loadingFinished"]({"requestId": "finished"})
+            callbacks["Network.requestWillBeSent"]({"requestId": "aborted", "type": "Font",
+                "request": {"url": "https://user:test-secret@example.test/private-token.woff2"}})
+            callbacks["Network.loadingFailed"]({"requestId": "aborted"})
+            raise exception
+
+        page.wait_for_load_state.side_effect = fail_load
+        # A closed context destroys the request state in a real browser. The
+        # snapshot must already be detached from it when close is called.
+        def close():
+            callbacks["Network.loadingFinished"]({"requestId": "navigation"})
+            if cleanup_fail:
+                raise Error("cleanup contains test-secret")
+        ctx.close.side_effect = close
+        patches = [patch.object(measure, "wait_quiet")]
+        if diagnostics_fail:
+            patches.append(patch.object(measure, "load_diagnostics", side_effect=Error("diagnostic test-secret")))
+        with contextlib.ExitStack() as stack:
+            for item in patches:
+                stack.enter_context(item)
+            result = measure.one_run(browser, "http://localhost:4321/speakers/", "scroll", 4, mobile=True)
+        ctx.close.assert_called_once()
+        return result
+
+    def test_timeout_and_closed_page_errors_stay_distinct_and_fail_closed(self):
+        for exception in (TimeoutError("timeout URL contains test-secret"),
+                          Error("Target page, context or browser has been closed; test-secret")):
+            with self.subTest(type=type(exception).__name__):
+                result = self.failed_load(exception)
+                self.assertIn(type(exception).__name__, result["error"])
+                self.assertEqual("within 60s" in result["error"], isinstance(exception, TimeoutError))
+                diagnostic = result["load_diagnostics"]
+                self.assertEqual(diagnostic["exception_type"], type(exception).__name__)
+                self.assertEqual(diagnostic["navigation_scope"], "same-origin")
+                self.assertEqual(diagnostic["pending_count"], 13)
+                self.assertEqual(len(diagnostic["pending_resources"]), 10)
+                self.assertEqual(diagnostic["pending_omitted"], 3)
+                self.assertTrue(all(item == {"type": "Script", "scope": "same-origin"}
+                                    for item in diagnostic["pending_resources"]))
+                encoded = json.dumps(result)
+                for private in ("test-secret", "private-token", "credential", "localhost", "example.test"):
+                    self.assertNotIn(private, encoded)
+                good = {key: 0 for key in measure.MOBILE_KEYS}
+                good["lcp_ms"] = 100
+                config = {"screens": {"heavy": {"path": "/speakers/", "hard": {"lcp_ms": 2500}}}}
+                with patch.object(measure, "one_run", side_effect=[good] * 4 + [result]):
+                    report, failures = measure.mobile_measure(MagicMock(), "http://localhost", config)
+                self.assertEqual(report["heavy"]["runs_ok"], 4)
+                self.assertIn("need 5/5", failures[0])
+
+    def test_diagnostics_or_context_cleanup_cannot_replace_original_error(self):
+        result = self.failed_load(TimeoutError("original test-secret"), diagnostics_fail=True, cleanup_fail=True)
+        self.assertEqual(result["error"], "mobile load did not complete within 60s: TimeoutError")
+        self.assertEqual(result["load_diagnostics"], {"unavailable": True})
+        self.assertEqual(result["cleanup_error_type"], "Error")
+        self.assertNotIn("test-secret", json.dumps(result))
 
 
 class MobileBudgetTests(unittest.TestCase):
