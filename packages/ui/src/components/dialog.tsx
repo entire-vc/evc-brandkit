@@ -95,12 +95,29 @@ const DialogOverlay = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
 );
 DialogOverlay.displayName = 'DialogOverlay';
 
-const DialogContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
-  ({ className, children, ...props }, ref) => {
-    const { onOpenChange } = useDialog();
+const CLOSE_LABELS: Record<string, string> = {
+  en: 'Close',
+  ru: 'Закрыть',
+};
+
+// Default close label follows the document language (<html lang>); falls back to English.
+function defaultCloseLabel() {
+  const lang = typeof document === 'undefined' ? '' : document.documentElement.lang;
+  return CLOSE_LABELS[lang.toLowerCase().split('-')[0]] ?? CLOSE_LABELS.en;
+}
+
+interface DialogContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  /** Accessible name of the close button. Defaults to a translation for the document language. */
+  closeLabel?: string;
+}
+
+const DialogContent = React.forwardRef<HTMLDivElement, DialogContentProps>(
+  ({ className, children, closeLabel, ...props }, ref) => {
+    const { open, onOpenChange } = useDialog();
 
     // Close on Escape
     React.useEffect(() => {
+      if (!open) return;
       const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'Escape') {
           onOpenChange(false);
@@ -108,21 +125,25 @@ const DialogContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
       };
       document.addEventListener('keydown', handleKeyDown);
       return () => document.removeEventListener('keydown', handleKeyDown);
-    }, [onOpenChange]);
+    }, [open, onOpenChange]);
 
-    // Prevent body scroll
+    // Prevent body scroll only while the dialog is open
     React.useEffect(() => {
+      if (!open) return;
+      const previous = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
       return () => {
-        document.body.style.overflow = '';
+        document.body.style.overflow = previous;
       };
-    }, []);
+    }, [open]);
 
     return (
       <DialogPortal>
         <DialogOverlay />
         <div
           ref={ref}
+          role="dialog"
+          aria-modal="true"
           className={cn(
             'fixed left-[50%] top-[50%] z-50 grid w-full max-w-lg translate-x-[-50%] translate-y-[-50%] gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] sm:rounded-lg',
             className
@@ -150,7 +171,7 @@ const DialogContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTML
               <path d="M18 6 6 18" />
               <path d="m6 6 12 12" />
             </svg>
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{closeLabel ?? defaultCloseLabel()}</span>
           </button>
         </div>
       </DialogPortal>
