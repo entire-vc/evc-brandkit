@@ -24,6 +24,7 @@ Available themes:
 - `spark.css` - Spark brand (orange/fire) 🔥
 - `playground.css` - Playground brand (blue/tech) 🌊
 - `team-relay.css` - Team Relay (indigo/purple)
+- `tailwind-v4.css` - Tailwind v4 `@theme` (CSS equivalent of `tailwind-preset.js`; use with `@import "tailwindcss";`)
 
 ### 2. Tailwind Preset
 
